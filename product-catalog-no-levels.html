@@ -3,82 +3,121 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Product Catalog</title>
+<title>Product Catalog — redesign</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; }
 
+  :root {
+    --ink: #0F172A;
+    --ink-soft: #425168;
+    --muted: #64748B;
+    --faint: #94A3B8;
+    --border: #E7EBF1;
+    --border-soft: #F0F2F6;
+    --surface: #FFFFFF;
+    --canvas: #FFFFFF;
+    --hover-tint: #F8FAFC;
+    --pf-bg: #EEF2FF;
+    --pf-fg: #4338CA;
+    --pj-bg: #FDF2F8;
+    --pj-fg: #BE185D;
+    --mono: 'JetBrains Mono', Menlo, monospace;
+  }
+
   body {
     margin: 0;
-    background: #FFF;
-    font-family: Inter, sans-serif;
+    background: var(--canvas);
+    font-family: Inter, -apple-system, sans-serif;
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
   }
 
-  .preview { padding: 32px; }
+  .preview { padding: 40px 24px; }
 
-  /* ---------- raiz ---------- */
+  /* ---------- raiz: fluida, não mais travada em 635px ---------- */
   .product-catalog {
+    width: 100%;
+    max-width: 760px;
+    margin: 0 auto;
     display: flex;
-    width: 635px;
     flex-direction: column;
     align-items: flex-start;
-    gap: 40px;
+    gap: 36px;
   }
 
-  /* ---------- header + level cards ---------- */
-  .catalog-intro {
-    display: flex;
-    width: 635px;
-    flex-direction: column;
-    align-items: flex-start;
+  /* ---------- header ---------- */
+  .catalog-intro { width: 100%; }
+
+  .catalog-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #0047BB;
+    margin: 0 0 10px;
+  }
+
+  .catalog-eyebrow::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #0047BB;
   }
 
   .catalog-title {
-    color: #0F172A;
-    font-family: Inter, sans-serif;
-    font-size: 24px;
-    font-style: normal;
+    font-size: 28px;
     font-weight: 700;
-    line-height: 32px;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
     margin: 0;
+    color: var(--ink);
   }
 
   .catalog-description {
-    align-self: stretch;
-    margin: 8px 0 0 0;
-    color: #425168;
-    font-family: Inter, sans-serif;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 24px;
+    margin: 10px 0 0;
+    max-width: 60ch;
+    color: var(--muted);
+    font-size: 15.5px;
+    line-height: 1.65;
   }
 
-  /* ---------- container de categorias ---------- */
+  .catalog-stat {
+    margin: 14px 0 0;
+    font-size: 13px;
+    color: var(--faint);
+  }
+
+  .catalog-stat strong { color: var(--ink-soft); font-weight: 600; }
+
+  /* ---------- categorias ---------- */
   .catalog-categories {
     display: flex;
-    width: 635px;
+    width: 100%;
     flex-direction: column;
     align-items: flex-start;
-    gap: 40px;
+    gap: 36px;
   }
 
   .catalog-category {
     display: flex;
-    width: 635px;
+    width: 100%;
     flex-direction: column;
     align-items: flex-start;
-    gap: 24px;
+    gap: 18px;
   }
 
-  /* ---------- header da categoria ---------- */
   .category-header {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 16px;
+    gap: 10px;
     align-self: stretch;
     background: none;
     border: 0;
@@ -87,74 +126,79 @@
     color: inherit;
     cursor: pointer;
     text-align: left;
+    border-radius: 10px;
   }
-
-  .category-header:hover .category-title { color: #0047BB; }
-  .category-header:hover .chevron svg path { stroke: #64748B; }
 
   .category-header:focus-visible {
     outline: 2px solid #0047BB;
-    outline-offset: 4px;
-    border-radius: 4px;
+    outline-offset: 6px;
   }
 
   .category-header-top {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 10px;
   }
 
+  .chevron {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    display: flex;
+    color: var(--faint);
+    transition: color 0.15s ease;
+  }
+
+  .category-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .category-icon svg { width: 16px; height: 16px; }
+
   .category-title {
-    color: #425168;
-    font-family: Inter, sans-serif;
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 28px;
-    letter-spacing: 0.6px;
-    text-transform: uppercase;
+    color: var(--ink);
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
   }
 
   .category-count-badge {
     display: flex;
-    padding: 2px 12px;
-    flex-direction: column;
-    align-items: flex-start;
+    padding: 2px 9px;
+    align-items: center;
     border-radius: 111px;
-    background: #F1F5F9;
-    color: #64748B;
-    font-family: Inter, sans-serif;
+    background: var(--border-soft);
+    color: var(--muted);
     font-size: 12px;
-    font-style: normal;
     font-weight: 600;
-    line-height: 19.2px;
+    font-variant-numeric: tabular-nums;
   }
+
+  .category-header:hover .category-title { color: #0047BB; }
+  .category-header:hover .chevron { color: var(--ink-soft); }
 
   .category-description {
     align-self: stretch;
-    color: #425168;
-    font-family: Inter, sans-serif;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 24px;
+    margin: 0 0 0 40px;
+    color: var(--muted);
+    font-size: 14.5px;
+    line-height: 1.6;
+    max-width: 62ch;
   }
 
-  .chevron {
-    width: 20px;
-    height: 20px;
-    aspect-ratio: 1 / 1;
-    flex-shrink: 0;
-    display: flex;
-  }
-
-  /* ---------- corpo da categoria ---------- */
   .category-body {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     align-self: stretch;
-    gap: 24px;
+    gap: 22px;
+    padding-left: 40px;
   }
 
   .category-body[hidden] { display: none; }
@@ -162,22 +206,29 @@
   /* ---------- agrupamento intermediário ---------- */
   .intermediate-group {
     display: flex;
-    width: 635px;
+    width: 100%;
     flex-direction: column;
-    align-items: flex-end;
-    gap: 12px;
+    align-items: flex-start;
+    gap: 10px;
   }
 
   .intermediate-group-title {
-    align-self: stretch;
-    color: #64748B;
-    font-family: Inter, sans-serif;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 24px;
-    letter-spacing: 0.44px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    color: var(--faint);
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
+  }
+
+  .intermediate-group-title::before {
+    content: "";
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: currentColor;
   }
 
   /* ---------- grupo de accordions ---------- */
@@ -187,8 +238,9 @@
     align-items: flex-start;
     align-self: stretch;
     border-radius: 14px;
-    border: 1px solid #E2E8F0;
-    background: #FFF;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03), 0 2px 8px rgba(15, 23, 42, 0.04);
     overflow: hidden;
   }
 
@@ -199,13 +251,13 @@
     align-self: stretch;
   }
 
-  .product-accordion + .product-accordion { border-top: 1px solid #E2E8F0; }
+  .product-accordion + .product-accordion { border-top: 1px solid var(--border-soft); }
 
   .product-accordion-header {
     display: flex;
-    padding: 16px;
+    padding: 14px 16px;
     align-items: center;
-    gap: 16px;
+    gap: 14px;
     align-self: stretch;
     background: none;
     border: 0;
@@ -213,11 +265,26 @@
     color: inherit;
     cursor: pointer;
     text-align: left;
+    position: relative;
   }
 
-  .product-accordion-header:hover { background: #F8FAFC; }
+  .product-accordion-header::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 8px;
+    bottom: 8px;
+    width: 3px;
+    border-radius: 0 3px 3px 0;
+    background: #0047BB;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+  }
+
+  .product-accordion-header:hover { background: var(--hover-tint); }
+  .product-accordion-header:hover::before { opacity: 1; }
   .product-accordion-header:hover .product-accordion-title { color: #0047BB; }
-  .product-accordion-header:hover .chevron svg path { stroke: #64748B; }
+  .product-accordion-header:hover .chevron { color: var(--ink-soft); }
 
   .product-accordion-header:focus-visible {
     outline: 2px solid #0047BB;
@@ -225,76 +292,54 @@
   }
 
   .product-accordion-title {
-    color: #0F172A;
-    font-family: Inter, sans-serif;
+    color: var(--ink);
     font-size: 14px;
-    font-style: normal;
     font-weight: 600;
-    line-height: 24px;
+    transition: color 0.15s ease;
   }
 
   .data-product-chips {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
     margin-left: auto;
+    flex-wrap: wrap;
+    justify-content: flex-end;
   }
 
   .data-product-chip {
     display: flex;
-    padding: 5px 8px;
-    flex-direction: column;
-    align-items: flex-start;
-    border-radius: 6px;
-    font-family: Menlo, monospace;
-    font-size: 12px;
+    padding: 4px 9px;
+    align-items: center;
+    border-radius: 111px;
+    font-family: var(--mono);
+    font-size: 11.5px;
     white-space: nowrap;
   }
 
-  .data-product-chip--pf { background: #F0F5FF; color: #0047BB; }
-  .data-product-chip--pj { background: #F9F0FF; color: #722ED1; }
+  .data-product-chip--pf { background: var(--pf-bg); color: var(--pf-fg); }
+  .data-product-chip--pj { background: var(--pj-bg); color: var(--pj-fg); }
 
   /* ---------- conteúdo aberto ---------- */
   .product-accordion-content {
     display: flex;
-    padding: 8px 16px 16px 16px;
+    padding: 4px 16px 18px 16px;
     flex-direction: column;
     align-items: flex-start;
-    gap: 12px;
+    gap: 14px;
     align-self: stretch;
+    background: #FFFFFF;
   }
 
   .product-accordion-content[hidden] { display: none; }
 
-  .metadata-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .metadata-chip {
-    display: flex;
-    padding: 2px 12px;
-    flex-direction: column;
-    align-items: flex-start;
-    border-radius: 111px;
-    background: #F1F5F9;
-    color: #64748B;
-    font-family: Inter, sans-serif;
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 19.2px;
-  }
-
   .product-description {
     align-self: stretch;
-    color: #64748B;
-    font-family: Inter, sans-serif;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 22.4px;
+    color: var(--muted);
+    font-size: 13.5px;
+    line-height: 1.6;
+    margin: 0;
+    padding-left: 32px;
   }
 
   /* ---------- lista de produtos ---------- */
@@ -303,89 +348,80 @@
     flex-direction: column;
     align-items: flex-start;
     align-self: stretch;
+    background: var(--surface);
+    border: 1px solid var(--border-soft);
+    border-radius: 10px;
+    overflow: hidden;
   }
 
   .product-row {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 12px;
     align-self: stretch;
-    height: 34px;
+    padding: 8px 12px;
+    transition: background 0.1s ease;
   }
+
+  .product-row + .product-row { border-top: 1px solid var(--border-soft); }
+  .product-row:hover { background: var(--hover-tint); }
 
   .mini-chip {
     display: flex;
-    width: 32px;
-    height: 23px;
-    padding: 4px 12px;
-    flex-direction: column;
-    align-items: center;
+    width: 30px;
+    padding: 3px 0;
     justify-content: center;
-    box-sizing: border-box;
-    flex-shrink: 0;
-    font-family: Inter, sans-serif;
-    font-size: 12px;
-    font-weight: 600;
-    line-height: 19.2px;
-    white-space: nowrap;
-  }
-
-  .mini-chip--pf {
-    border-radius: 6px;
-    border: 0.5px solid rgba(41, 97, 255, 0.20);
-    background: #F0F5FF;
-    color: #0047BB;
-  }
-
-  .mini-chip--pj {
-    border-radius: 6px;
-    border: 0.5px solid rgba(119, 7, 255, 0.20);
-    background: #F9F0FF;
-    color: #722ED1;
-  }
-
-  .product-link-wrapper {
-    display: flex;
     align-items: center;
-    gap: 8px;
+    border-radius: 111px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    flex-shrink: 0;
   }
+
+  .mini-chip--pf { background: var(--pf-bg); color: var(--pf-fg); }
+  .mini-chip--pj { background: var(--pj-bg); color: var(--pj-fg); }
+
+  .product-link-wrapper { display: flex; align-items: center; }
 
   .product-name {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    color: #0047BB;
-    font-family: Menlo, monospace;
+    gap: 6px;
+    color: var(--ink-soft);
+    font-family: var(--mono);
     font-size: 12px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
     text-decoration: none;
     border-radius: 4px;
   }
 
-  .product-name:hover,
-  .product-name:focus-visible {
-    text-decoration: underline;
-  }
+  .product-name:hover, .product-name:focus-visible { color: #0047BB; text-decoration: underline; }
 
-  .product-name:focus-visible {
-    outline: 2px solid #0047BB;
-    outline-offset: 2px;
-  }
+  .product-name:focus-visible { outline: 2px solid #0047BB; outline-offset: 2px; }
 
-  .external-link-icon {
-    width: 12px;
-    height: 12px;
-    aspect-ratio: 1 / 1;
-    flex-shrink: 0;
+  .external-link-icon { width: 11px; height: 11px; flex-shrink: 0; display: flex; opacity: 0.6; }
+
+  /* ---------- metadados ---------- */
+  .metadata-row {
     display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-left: 32px;
+    flex-wrap: wrap;
   }
 
-  /* ---------- tooltip do chip de nível (User-level / Institution-level) ---------- */
-  .level-chip {
-    cursor: help;
+  .metadata-chip {
+    display: flex;
+    padding: 3px 10px;
+    align-items: center;
+    border-radius: 111px;
+    background: var(--border-soft);
+    color: var(--muted);
+    font-size: 11.5px;
+    font-weight: 500;
   }
+
+  .level-chip { cursor: help; }
 
   .level-chip:focus-visible {
     outline: 2px solid #0047BB;
@@ -393,41 +429,36 @@
     border-radius: 111px;
   }
 
-  /* elemento único, anexado ao body — fica fora de qualquer overflow:hidden ancestral */
+  /* ---------- tooltip: elemento único fora de qualquer overflow:hidden ---------- */
   .chip-tooltip {
     position: fixed;
     top: 0;
     left: 0;
     z-index: 1000;
     max-width: 240px;
-    padding: 8px 10px;
-    border-radius: 8px;
-    background: #0F172A;
-    color: #F8FAFC;
+    padding: 9px 11px;
+    border-radius: 9px;
+    background: var(--ink);
+    color: #F1F5F9;
     font-family: Inter, sans-serif;
     font-size: 12px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 17px;
+    line-height: 1.5;
     text-align: left;
-    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.20);
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.22);
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
     transition: opacity 0.12s ease;
   }
 
-  .chip-tooltip.is-visible {
-    opacity: 1;
-    visibility: visible;
-  }
+  .chip-tooltip.is-visible { opacity: 1; visibility: visible; }
 
   .chip-tooltip__arrow {
     position: absolute;
     bottom: -4px;
     width: 8px;
     height: 8px;
-    background: #0F172A;
+    background: var(--ink);
     transform: translateX(-50%) rotate(45deg);
   }
 </style>
@@ -438,8 +469,10 @@
   <section class="product-catalog">
 
     <div class="catalog-intro">
+      <div class="catalog-eyebrow">Klavi Conecte</div>
       <h2 class="catalog-title">Product catalog</h2>
       <p class="catalog-description">Este catálogo resume os produtos disponíveis, o tipo de conta, o nível de agregação e o resultado esperado.</p>
+      <p class="catalog-stat" id="catalog-stat"></p>
     </div>
 
     <div class="catalog-categories" id="catalog-categories"></div>
@@ -451,12 +484,27 @@
 (function () {
   "use strict";
 
-  var CHEVRON_DOWN = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5L10 12.5L15 7.5" stroke="#94A3B8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-  var CHEVRON_RIGHT = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M7.5 15L12.5 10L7.5 5" stroke="#94A3B8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-  var EXTERNAL_LINK = '<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M10.5 6.5V9.5C10.5 9.76522 10.3946 10.0196 10.2071 10.2071C10.0196 10.3946 9.76522 10.5 9.5 10.5H2.5C2.23478 10.5 1.98043 10.3946 1.79289 10.2071C1.60536 10.0196 1.5 9.76522 1.5 9.5V2.5C1.5 2.23478 1.60536 1.98043 1.79289 1.79289C1.98043 1.60536 2.23478 1.5 2.5 1.5H5.5" stroke="#0047BB" stroke-linecap="round" stroke-linejoin="round"/><path d="M10.5 1.5L6 6" stroke="#0047BB" stroke-linecap="round" stroke-linejoin="round"/><path d="M7.5 1.5H10.5V4.5" stroke="#0047BB" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  var CHEVRON_DOWN = '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  var CHEVRON_RIGHT = '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  var EXTERNAL_LINK = '<svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M10.5 6.5V9.5C10.5 9.76522 10.3946 10.0196 10.2071 10.2071C10.0196 10.3946 9.76522 10.5 9.5 10.5H2.5C2.23478 10.5 1.98043 10.3946 1.79289 10.2071C1.60536 10.0196 1.5 9.76522 1.5 9.5V2.5C1.5 2.23478 1.60536 1.98043 1.79289 1.79289C1.98043 1.60536 2.23478 1.5 2.5 1.5H5.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="M10.5 1.5L6 6" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+  var ICONS = {
+    statement: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="13" y2="17"/></svg>',
+    risk: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
+    market: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 17 9 11 13 15 21 7"/><polyline points="14 7 21 7 21 14"/></svg>',
+    kyc: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><circle cx="8" cy="12" r="2"/><line x1="14" y1="10" x2="19" y2="10"/><line x1="14" y1="14" x2="17" y2="14"/></svg>'
+  };
+
+  var THEME = {
+    statement: { accent: "#0047BB", tint: "#EFF6FF" },
+    risk: { accent: "#D97706", tint: "#FFFBEB" },
+    market: { accent: "#7C3AED", tint: "#F5F3FF" },
+    kyc: { accent: "#059669", tint: "#ECFDF5" }
+  };
 
   var DATA = [
     {
+      key: "statement",
       title: "Statement",
       count: 19,
       description: "Dados financeiros brutos e enriquecidos de contas, cartões, empréstimos, financiamentos, cheque especial e investimentos.",
@@ -503,6 +551,7 @@
       ]
     },
     {
+      key: "risk",
       title: "Crédito e risco",
       count: 7,
       description: "Variáveis e modelos derivados de renda, despesas, capacidade financeira, risco de crédito, apostas e score.",
@@ -521,6 +570,7 @@
       ]
     },
     {
+      key: "market",
       title: "Inteligência de mercado",
       count: 3,
       description: "Variáveis que ajudam a identificar posse de produtos, padrões de comportamento, ciclo de vida e principalidade da conta.",
@@ -535,6 +585,7 @@
       ]
     },
     {
+      key: "kyc",
       title: "KYC",
       count: 1,
       description: "Dados de identidade e cadastro de pessoas físicas e jurídicas, incluindo informações declaradas disponíveis via Open Finance.",
@@ -551,7 +602,7 @@
   var uid = 0;
   function nextId(prefix) { uid += 1; return prefix + "-" + uid; }
 
-  /* ---------- tooltip do chip de nível: elemento único, fora de qualquer overflow:hidden ---------- */
+  /* ---------- tooltip: elemento único, fora de qualquer overflow:hidden ---------- */
   var tooltipEl = document.createElement("div");
   tooltipEl.className = "chip-tooltip";
   tooltipEl.setAttribute("role", "tooltip");
@@ -559,18 +610,18 @@
   var tooltipArrow = document.createElement("div");
   tooltipArrow.className = "chip-tooltip__arrow";
 
-  var tooltipText = document.createElement("span");
-  tooltipEl.appendChild(tooltipText);
+  var tooltipTextEl = document.createElement("span");
+  tooltipEl.appendChild(tooltipTextEl);
   tooltipEl.appendChild(tooltipArrow);
   document.body.appendChild(tooltipEl);
 
-  var GAP = 10; // distância entre o chip e a bolha (acomoda a seta)
+  var GAP = 10;
 
   function showTooltip(chip) {
     var text = chip.getAttribute("data-tooltip");
     if (!text) { return; }
 
-    tooltipText.textContent = text;
+    tooltipTextEl.textContent = text;
     tooltipEl.style.left = "0px";
     tooltipEl.style.top = "0px";
     tooltipEl.classList.add("is-visible");
@@ -588,17 +639,13 @@
     tooltipEl.style.left = left + "px";
     tooltipEl.style.top = top + "px";
 
-    // a seta sempre aponta pro centro do chip, mesmo se a bolha for
-    // deslocada pra não sair da viewport
     var arrowLeft = (chipRect.left + chipRect.width / 2) - left;
     arrowLeft = Math.max(10, Math.min(arrowLeft, tipRect.width - 10));
     tooltipArrow.style.left = arrowLeft + "px";
     tooltipArrow.style.transform = "translateX(-50%) rotate(45deg)";
   }
 
-  function hideTooltip() {
-    tooltipEl.classList.remove("is-visible");
-  }
+  function hideTooltip() { tooltipEl.classList.remove("is-visible"); }
 
   function el(tag, className) {
     var node = document.createElement(tag);
@@ -615,7 +662,6 @@
     row.appendChild(chip);
 
     var wrapper = el("div", "product-link-wrapper");
-
     var link = el("a", "product-name");
     link.href = "#";
     link.appendChild(document.createTextNode(product.name));
@@ -627,24 +673,21 @@
 
     link.setAttribute("aria-label", "Abrir referência de " + product.name + " em nova página");
     wrapper.appendChild(link);
-
     row.appendChild(wrapper);
     return row;
   }
 
-  function buildAccordion(item) {
+  function buildAccordion(item, theme) {
     var panelId = nextId("panel");
-    var isOpen = item.open === true;
-
     var accordion = el("div", "product-accordion");
 
     var header = el("button", "product-accordion-header");
     header.type = "button";
-    header.setAttribute("aria-expanded", isOpen ? "true" : "false");
+    header.setAttribute("aria-expanded", "false");
     header.setAttribute("aria-controls", panelId);
 
     var chevron = el("span", "chevron");
-    chevron.innerHTML = isOpen ? CHEVRON_DOWN : CHEVRON_RIGHT;
+    chevron.innerHTML = CHEVRON_RIGHT;
     chevron.setAttribute("aria-hidden", "true");
     header.appendChild(chevron);
 
@@ -664,10 +707,9 @@
 
     var content = el("div", "product-accordion-content");
     content.id = panelId;
-    if (!isOpen) { content.hidden = true; }
+    content.hidden = true;
 
     var description = el("p", "product-description");
-    description.style.margin = "0";
     description.textContent = item.description;
     content.appendChild(description);
 
@@ -691,7 +733,6 @@
         levelChip.setAttribute("data-tooltip", levelTooltipText);
         levelChip.setAttribute("tabindex", "0");
         levelChip.setAttribute("aria-label", item.level + " — " + levelTooltipText);
-
         levelChip.addEventListener("mouseenter", function () { showTooltip(levelChip); });
         levelChip.addEventListener("mouseleave", hideTooltip);
         levelChip.addEventListener("focus", function () { showTooltip(levelChip); });
@@ -718,41 +759,46 @@
     return accordion;
   }
 
-  function buildGroup(group) {
+  function buildGroup(group, theme) {
     var wrapper = el("div", "intermediate-group");
-
     if (group.title) {
       var title = el("div", "intermediate-group-title");
       title.textContent = group.title;
+      title.style.color = theme.accent;
       wrapper.appendChild(title);
     }
-
     var accordionGroup = el("div", "product-accordion-group");
     group.items.forEach(function (item) {
-      accordionGroup.appendChild(buildAccordion(item));
+      accordionGroup.appendChild(buildAccordion(item, theme));
     });
     wrapper.appendChild(accordionGroup);
-
     return wrapper;
   }
 
   function buildCategory(category) {
     var bodyId = nextId("category");
-    var isOpen = category.open === true;
+    var theme = THEME[category.key] || THEME.statement;
 
     var section = el("section", "catalog-category");
 
     var header = el("button", "category-header");
     header.type = "button";
-    header.setAttribute("aria-expanded", isOpen ? "true" : "false");
+    header.setAttribute("aria-expanded", "false");
     header.setAttribute("aria-controls", bodyId);
 
     var top = el("span", "category-header-top");
 
     var chevron = el("span", "chevron");
-    chevron.innerHTML = isOpen ? CHEVRON_DOWN : CHEVRON_RIGHT;
+    chevron.innerHTML = CHEVRON_RIGHT;
     chevron.setAttribute("aria-hidden", "true");
     top.appendChild(chevron);
+
+    var iconBadge = el("span", "category-icon");
+    iconBadge.style.background = theme.tint;
+    iconBadge.style.color = theme.accent;
+    iconBadge.innerHTML = ICONS[category.key] || ICONS.statement;
+    iconBadge.setAttribute("aria-hidden", "true");
+    top.appendChild(iconBadge);
 
     var title = el("span", "category-title");
     title.textContent = category.title;
@@ -772,10 +818,10 @@
 
     var body = el("div", "category-body");
     body.id = bodyId;
-    if (!isOpen) { body.hidden = true; }
+    body.hidden = true;
 
     category.groups.forEach(function (group) {
-      body.appendChild(buildGroup(group));
+      body.appendChild(buildGroup(group, theme));
     });
 
     section.appendChild(body);
@@ -794,6 +840,10 @@
   DATA.forEach(function (category) {
     root.appendChild(buildCategory(category));
   });
+
+  var totalProducts = DATA.reduce(function (sum, cat) { return sum + cat.count; }, 0);
+  document.getElementById("catalog-stat").innerHTML =
+    "<strong>" + totalProducts + "</strong> produtos em <strong>" + DATA.length + "</strong> categorias";
 })();
 </script>
 
