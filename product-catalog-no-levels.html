@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Product Catalog</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #FFF;
+    font-family: Inter, sans-serif;
+  }
+
+  .preview { padding: 32px; }
+
+  /* ---------- raiz ---------- */
+  .product-catalog {
+    display: flex;
+    width: 635px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 40px;
+  }
+
+  /* ---------- header + level cards ---------- */
+  .catalog-intro {
+    display: flex;
+    width: 635px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .catalog-title {
+    color: #0F172A;
+    font-family: Inter, sans-serif;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 32px;
+    margin: 0;
+  }
+
+  .catalog-description {
+    align-self: stretch;
+    margin: 8px 0 0 0;
+    color: #425168;
+    font-family: Inter, sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+  }
+
+  /* ---------- container de categorias ---------- */
+  .catalog-categories {
+    display: flex;
+    width: 635px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 40px;
+  }
+
+  .catalog-category {
+    display: flex;
+    width: 635px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+  }
+
+  /* ---------- header da categoria ---------- */
+  .category-header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    align-self: stretch;
+    background: none;
+    border: 0;
+    padding: 0;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+    text-align: left;
+  }
+
+  .category-header:hover .category-title { color: #0047BB; }
+  .category-header:hover .chevron svg path { stroke: #64748B; }
+
+  .category-header:focus-visible {
+    outline: 2px solid #0047BB;
+    outline-offset: 4px;
+    border-radius: 4px;
+  }
+
+  .category-header-top {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .category-title {
+    color: #425168;
+    font-family: Inter, sans-serif;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 28px;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+  }
+
+  .category-count-badge {
+    display: flex;
+    padding: 2px 12px;
+    flex-direction: column;
+    align-items: flex-start;
+    border-radius: 111px;
+    background: #F1F5F9;
+    color: #64748B;
+    font-family: Inter, sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 19.2px;
+  }
+
+  .category-description {
+    align-self: stretch;
+    color: #425168;
+    font-family: Inter, sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+  }
+
+  .chevron {
+    width: 20px;
+    height: 20px;
+    aspect-ratio: 1 / 1;
+    flex-shrink: 0;
+    display: flex;
+  }
+
+  /* ---------- corpo da categoria ---------- */
+  .category-body {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    align-self: stretch;
+    gap: 24px;
+  }
+
+  .category-body[hidden] { display: none; }
+
+  /* ---------- agrupamento intermediário ---------- */
+  .intermediate-group {
+    display: flex;
+    width: 635px;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 12px;
+  }
+
+  .intermediate-group-title {
+    align-self: stretch;
+    color: #64748B;
+    font-family: Inter, sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: 0.44px;
+    text-transform: uppercase;
+  }
+
+  /* ---------- grupo de accordions ---------- */
+  .product-accordion-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    align-self: stretch;
+    border-radius: 14px;
+    border: 1px solid #E2E8F0;
+    background: #FFF;
+    overflow: hidden;
+  }
+
+  .product-accordion {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    align-self: stretch;
+  }
+
+  .product-accordion + .product-accordion { border-top: 1px solid #E2E8F0; }
+
+  .product-accordion-header {
+    display: flex;
+    padding: 16px;
+    align-items: center;
+    gap: 16px;
+    align-self: stretch;
+    background: none;
+    border: 0;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+    text-align: left;
+  }
+
+  .product-accordion-header:hover { background: #F8FAFC; }
+  .product-accordion-header:hover .product-accordion-title { color: #0047BB; }
+  .product-accordion-header:hover .chevron svg path { stroke: #64748B; }
+
+  .product-accordion-header:focus-visible {
+    outline: 2px solid #0047BB;
+    outline-offset: -2px;
+  }
+
+  .product-accordion-title {
+    color: #0F172A;
+    font-family: Inter, sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 24px;
+  }
+
+  .data-product-chips {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: auto;
+  }
+
+  .data-product-chip {
+    display: flex;
+    padding: 5px 8px;
+    flex-direction: column;
+    align-items: flex-start;
+    border-radius: 6px;
+    font-family: Menlo, monospace;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  .data-product-chip--pf { background: #F0F5FF; color: #0047BB; }
+  .data-product-chip--pj { background: #F9F0FF; color: #722ED1; }
+
+  /* ---------- conteúdo aberto ---------- */
+  .product-accordion-content {
+    display: flex;
+    padding: 8px 16px 16px 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    align-self: stretch;
+  }
+
+  .product-accordion-content[hidden] { display: none; }
+
+  .metadata-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .metadata-chip {
+    display: flex;
+    padding: 2px 12px;
+    flex-direction: column;
+    align-items: flex-start;
+    border-radius: 111px;
+    background: #F1F5F9;
+    color: #64748B;
+    font-family: Inter, sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 19.2px;
+  }
+
+  .product-description {
+    align-self: stretch;
+    color: #64748B;
+    font-family: Inter, sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22.4px;
+  }
+
+  /* ---------- lista de produtos ---------- */
+  .product-list {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    align-self: stretch;
+  }
+
+  .product-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    align-self: stretch;
+    height: 34px;
+  }
+
+  .mini-chip {
+    display: flex;
+    width: 32px;
+    height: 23px;
+    padding: 4px 12px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    flex-shrink: 0;
+    font-family: Inter, sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 19.2px;
+    white-space: nowrap;
+  }
+
+  .mini-chip--pf {
+    border-radius: 6px;
+    border: 0.5px solid rgba(41, 97, 255, 0.20);
+    background: #F0F5FF;
+    color: #0047BB;
+  }
+
+  .mini-chip--pj {
+    border-radius: 6px;
+    border: 0.5px solid rgba(119, 7, 255, 0.20);
+    background: #F9F0FF;
+    color: #722ED1;
+  }
+
+  .product-link-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .product-name {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #0047BB;
+    font-family: Menlo, monospace;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    text-decoration: none;
+    border-radius: 4px;
+  }
+
+  .product-name:hover,
+  .product-name:focus-visible {
+    text-decoration: underline;
+  }
+
+  .product-name:focus-visible {
+    outline: 2px solid #0047BB;
+    outline-offset: 2px;
+  }
+
+  .external-link-icon {
+    width: 12px;
+    height: 12px;
+    aspect-ratio: 1 / 1;
+    flex-shrink: 0;
+    display: flex;
+  }
+
+  /* ---------- tooltip do chip de nível (User-level / Institution-level) ---------- */
+  .level-chip {
+    cursor: help;
+  }
+
+  .level-chip:focus-visible {
+    outline: 2px solid #0047BB;
+    outline-offset: 2px;
+    border-radius: 111px;
+  }
+
+  /* elemento único, anexado ao body — fica fora de qualquer overflow:hidden ancestral */
+  .chip-tooltip {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    max-width: 240px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    background: #0F172A;
+    color: #F8FAFC;
+    font-family: Inter, sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 17px;
+    text-align: left;
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.20);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.12s ease;
+  }
+
+  .chip-tooltip.is-visible {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .chip-tooltip__arrow {
+    position: absolute;
+    bottom: -4px;
+    width: 8px;
+    height: 8px;
+    background: #0F172A;
+    transform: translateX(-50%) rotate(45deg);
+  }
+</style>
+</head>
+<body>
+
+<div class="preview">
+  <section class="product-catalog">
+
+    <div class="catalog-intro">
+      <h2 class="catalog-title">Product catalog</h2>
+      <p class="catalog-description">Este catálogo resume os produtos disponíveis, o tipo de conta, o nível de agregação e o resultado esperado.</p>
+    </div>
+
+    <div class="catalog-categories" id="catalog-categories"></div>
+
+  </section>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var CHEVRON_DOWN = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5L10 12.5L15 7.5" stroke="#94A3B8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  var CHEVRON_RIGHT = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M7.5 15L12.5 10L7.5 5" stroke="#94A3B8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  var EXTERNAL_LINK = '<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M10.5 6.5V9.5C10.5 9.76522 10.3946 10.0196 10.2071 10.2071C10.0196 10.3946 9.76522 10.5 9.5 10.5H2.5C2.23478 10.5 1.98043 10.3946 1.79289 10.2071C1.60536 10.0196 1.5 9.76522 1.5 9.5V2.5C1.5 2.23478 1.60536 1.98043 1.79289 1.79289C1.98043 1.60536 2.23478 1.5 2.5 1.5H5.5" stroke="#0047BB" stroke-linecap="round" stroke-linejoin="round"/><path d="M10.5 1.5L6 6" stroke="#0047BB" stroke-linecap="round" stroke-linejoin="round"/><path d="M7.5 1.5H10.5V4.5" stroke="#0047BB" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+  var DATA = [
+    {
+      title: "Statement",
+      count: 19,
+      description: "Dados financeiros brutos e enriquecidos de contas, cartões, empréstimos, financiamentos, cheque especial e investimentos.",
+      groups: [
+        {
+          title: "Contas e cartões",
+          items: [
+            { title: "Conta corrente", level: "Institution-level", description: "Dados de conta corrente: número da conta, saldo, extratos e transações.", products: [{ type: "PF", name: "pf_checking_account" }, { type: "PJ", name: "pj_checking_account" }] },
+            { title: "Conta poupança", level: "Institution-level", description: "Dados de conta poupança: número da conta, saldo, extratos e transações.", products: [{ type: "PF", name: "pf_savings_account" }, { type: "PJ", name: "pj_savings_account" }] },
+            { title: "Cartão de crédito", level: "Institution-level", description: "Dados de cartão de crédito: detalhes do cartão, limite, faturas e transações.", products: [{ type: "PF", name: "pf_credit_card" }, { type: "PJ", name: "pj_credit_card" }] },
+            { title: "Saldo", level: "Institution-level", description: "Saldo de contas corrente e poupança.", products: [{ type: "PF", name: "pf_balance" }, { type: "PJ", name: "pj_balance" }] }
+          ]
+        },
+        {
+          title: "Crédito e financiamento",
+          items: [
+            { title: "Empréstimos", level: "Institution-level", description: "Dados de contrato de empréstimo: valor, juros, parcelas e histórico de pagamento.", products: [{ type: "PF", name: "pf_loans" }, { type: "PJ", name: "pj_loans" }] },
+            { title: "Financiamentos", level: "Institution-level", description: "Dados de contrato de financiamento: valor financiado, juros, parcelas e histórico.", products: [{ type: "PF", name: "pf_financing" }, { type: "PJ", name: "pj_financing" }] },
+            { title: "Antecipação de recebíveis", level: "Institution-level", description: "Dados de contrato de antecipação de recebíveis: valor, juros, parcelas e histórico.", products: [{ type: "PF", name: "pf_invoice_financing" }, { type: "PJ", name: "pj_invoice_financing" }] },
+            { title: "Cheque especial", level: "Institution-level", description: "Dados de cheque especial: detalhes do contrato, valor, juros, parcelas e histórico.", products: [{ type: "PF", name: "pf_overdraft" }, { type: "PJ", name: "pj_overdraft" }] }
+          ]
+        },
+        {
+          title: "Investimentos",
+          items: [
+            { title: "Renda variável", level: "Institution-level", description: "Investimentos de renda variável: dados do produto, saldo, transações e notas de corretagem.", products: [{ type: "PF", name: "pf_variable_incomes" }, { type: "PJ", name: "pj_variable_incomes" }] },
+            { title: "Renda fixa bancária", level: "Institution-level", description: "Investimentos de renda fixa bancária: dados do produto, saldo e transações.", products: [{ type: "PF", name: "pf_bank_fixed_incomes" }, { type: "PJ", name: "pj_bank_fixed_incomes" }] },
+            { title: "Fundos", level: "Institution-level", description: "Fundos de investimento: dados do produto, saldo e transações.", products: [{ type: "PF", name: "pf_funds" }, { type: "PJ", name: "pj_funds" }] },
+            { title: "Renda fixa de crédito", level: "Institution-level", description: "Investimentos de renda fixa de crédito: dados do produto, saldo e transações.", products: [{ type: "PF", name: "pf_credit_fixed_incomes" }, { type: "PJ", name: "pj_credit_fixed_incomes" }] },
+            { title: "Títulos públicos", level: "Institution-level", description: "Títulos públicos: dados do produto, saldo e transações.", products: [{ type: "PF", name: "pf_treasury_bonds" }, { type: "PJ", name: "pj_treasury_bonds" }] }
+          ]
+        },
+        {
+          title: "Dados enriquecidos",
+          items: [
+            { title: "Conta corrente categorizada (nível 2)", level: "Institution-level", description: "Conta corrente enriquecida com inteligência Klavi e 2 níveis de categorização de transações.", products: [{ type: "PF", name: "pf_categorized_checking_l2" }, { type: "PJ", name: "pj_categorized_checking_l2" }] },
+            { title: "Conta poupança categorizada (nível 2)", level: "Institution-level", description: "Conta poupança enriquecida com inteligência Klavi e 2 níveis de categorização de transações.", products: [{ type: "PF", name: "pf_categorized_savings_l2" }, { type: "PJ", name: "pj_categorized_savings_l2" }] },
+            { title: "Cartão de crédito categorizado (nível 2)", level: "Institution-level", description: "Fatura de cartão enriquecida com inteligência Klavi e 2 níveis de categorização de transações.", products: [{ type: "PF", name: "pf_categorized_creditcard_l2" }, { type: "PJ", name: "pj_categorized_creditcard_l2" }] },
+            { title: "Conta corrente categorizada (nível 3)", level: "Institution-level", description: "Conta corrente enriquecida com inteligência Klavi e 3 níveis de categorização de transações.", products: [{ type: "PF", name: "pf_categorized_checking_l3" }, { type: "PJ", name: "pj_categorized_checking_l3" }] },
+            { title: "Conta poupança categorizada (nível 3)", level: "Institution-level", description: "Conta poupança enriquecida com inteligência Klavi e 3 níveis de categorização de transações.", products: [{ type: "PF", name: "pf_categorized_savings_l3" }, { type: "PJ", name: "pj_categorized_savings_l3" }] },
+            { title: "Cartão de crédito categorizado (nível 3)", level: "Institution-level", description: "Fatura de cartão enriquecida com inteligência Klavi e 3 níveis de categorização de transações.", products: [{ type: "PF", name: "pf_categorized_creditcard_l3" }, { type: "PJ", name: "pj_categorized_creditcard_l3" }] }
+          ]
+        }
+      ]
+    },
+    {
+      title: "Crédito e risco",
+      count: 7,
+      description: "Variáveis e modelos derivados de renda, despesas, capacidade financeira, risco de crédito, apostas e score.",
+      groups: [
+        {
+          items: [
+            { title: "Entradas financeiras", level: "User-level", variables: "144 variáveis", description: "Variáveis de fluxo de caixa que identificam tipos de renda e ganhos observados adicionais.", products: [{ type: "PF", name: "pf_financial_entries" }] },
+            { title: "Risco de crédito", level: "User-level", variables: "141 variáveis", description: "Variáveis de risco de crédito com base em dados transacionais e produtos ou serviços financeiros contratados.", products: [{ type: "PF", name: "pf_credit_risk" }] },
+            { title: "Renda estimada", level: "User-level", variables: "8 variáveis", description: "Informação de renda calculada a partir das entradas recorrentes na conta corrente, observadas em uma janela de 6 meses.", products: [{ type: "PF", name: "pf_income" }] },
+            { title: "Despesas recorrentes", level: "User-level", variables: "20 variáveis", description: "Informação observada dos gastos recorrentes da pessoa consultada em uma janela de 3 meses.", products: [{ type: "PF", name: "pf_recurrent_expenses" }] },
+            { title: "Capacidade financeira", level: "User-level", description: "Indicador que aponta a parcela de renda potencialmente disponível para assumir novos compromissos financeiros.", products: [{ type: "PF", name: "pf_financial_capacity" }] },
+            { title: "Indicador de apostas", level: "User-level", description: "Indicador de comportamento transacional relacionado a apostas, quando identificado nos dados conectados.", products: [{ type: "PF", name: "pf_bets_indicator" }] },
+            { title: "Score de crédito", level: "User-level", variables: "1 variável cada", description: "Pontuação de 0 a 1000 que representa uma estimativa estatística de risco de inadimplência.", products: [{ type: "PF", name: "pf_score_l1" }, { type: "PF", name: "pf_score_l2" }, { type: "PF", name: "pf_score_l3" }] }
+          ]
+        }
+      ]
+    },
+    {
+      title: "Inteligência de mercado",
+      count: 3,
+      description: "Variáveis que ajudam a identificar posse de produtos, padrões de comportamento, ciclo de vida e principalidade da conta.",
+      groups: [
+        {
+          items: [
+            { title: "Produtos financeiros", level: "User-level", variables: "105 variáveis", description: "Variáveis de produtos financeiros: transações, produtos e serviços contratados e saldos de conta corrente ou poupança.", products: [{ type: "PF", name: "pf_financial_products" }] },
+            { title: "Produtos não financeiros", level: "User-level", variables: "56 variáveis", description: "Variáveis de produtos não financeiros derivadas de dados transacionais de serviços essenciais e estilo de vida.", products: [{ type: "PF", name: "pf_non_financial_products" }] },
+            { title: "Principalidade", level: "Institution-level", description: "Modelo de score que indica o nível de principalidade da conta na instituição conectada.", products: [{ type: "PF", name: "pf_principality" }] }
+          ]
+        }
+      ]
+    },
+    {
+      title: "KYC",
+      count: 1,
+      description: "Dados de identidade e cadastro de pessoas físicas e jurídicas, incluindo informações declaradas disponíveis via Open Finance.",
+      groups: [
+        {
+          items: [
+            { title: "Identidade", level: "Institution-level", description: "Dados de identidade e cadastro disponíveis via Open Finance, como informações declaradas de PF ou PJ.", products: [{ type: "PF", name: "pf_identity" }, { type: "PJ", name: "pj_identity" }] }
+          ]
+        }
+      ]
+    }
+  ];
+
+  var uid = 0;
+  function nextId(prefix) { uid += 1; return prefix + "-" + uid; }
+
+  /* ---------- tooltip do chip de nível: elemento único, fora de qualquer overflow:hidden ---------- */
+  var tooltipEl = document.createElement("div");
+  tooltipEl.className = "chip-tooltip";
+  tooltipEl.setAttribute("role", "tooltip");
+
+  var tooltipArrow = document.createElement("div");
+  tooltipArrow.className = "chip-tooltip__arrow";
+
+  var tooltipText = document.createElement("span");
+  tooltipEl.appendChild(tooltipText);
+  tooltipEl.appendChild(tooltipArrow);
+  document.body.appendChild(tooltipEl);
+
+  var GAP = 10; // distância entre o chip e a bolha (acomoda a seta)
+
+  function showTooltip(chip) {
+    var text = chip.getAttribute("data-tooltip");
+    if (!text) { return; }
+
+    tooltipText.textContent = text;
+    tooltipEl.style.left = "0px";
+    tooltipEl.style.top = "0px";
+    tooltipEl.classList.add("is-visible");
+
+    var chipRect = chip.getBoundingClientRect();
+    var tipRect = tooltipEl.getBoundingClientRect();
+
+    var left = chipRect.left + (chipRect.width / 2) - (tipRect.width / 2);
+    var minLeft = 8;
+    var maxLeft = window.innerWidth - tipRect.width - 8;
+    left = Math.max(minLeft, Math.min(left, maxLeft));
+
+    var top = chipRect.top - tipRect.height - GAP;
+
+    tooltipEl.style.left = left + "px";
+    tooltipEl.style.top = top + "px";
+
+    // a seta sempre aponta pro centro do chip, mesmo se a bolha for
+    // deslocada pra não sair da viewport
+    var arrowLeft = (chipRect.left + chipRect.width / 2) - left;
+    arrowLeft = Math.max(10, Math.min(arrowLeft, tipRect.width - 10));
+    tooltipArrow.style.left = arrowLeft + "px";
+    tooltipArrow.style.transform = "translateX(-50%) rotate(45deg)";
+  }
+
+  function hideTooltip() {
+    tooltipEl.classList.remove("is-visible");
+  }
+
+  function el(tag, className) {
+    var node = document.createElement(tag);
+    if (className) { node.className = className; }
+    return node;
+  }
+
+  function buildProductRow(product) {
+    var row = el("div", "product-row");
+    var type = product.type.toLowerCase();
+
+    var chip = el("span", "mini-chip mini-chip--" + type);
+    chip.textContent = product.type;
+    row.appendChild(chip);
+
+    var wrapper = el("div", "product-link-wrapper");
+
+    var link = el("a", "product-name");
+    link.href = "#";
+    link.appendChild(document.createTextNode(product.name));
+
+    var icon = el("span", "external-link-icon");
+    icon.innerHTML = EXTERNAL_LINK;
+    icon.setAttribute("aria-hidden", "true");
+    link.appendChild(icon);
+
+    link.setAttribute("aria-label", "Abrir referência de " + product.name + " em nova página");
+    wrapper.appendChild(link);
+
+    row.appendChild(wrapper);
+    return row;
+  }
+
+  function buildAccordion(item) {
+    var panelId = nextId("panel");
+    var isOpen = item.open === true;
+
+    var accordion = el("div", "product-accordion");
+
+    var header = el("button", "product-accordion-header");
+    header.type = "button";
+    header.setAttribute("aria-expanded", isOpen ? "true" : "false");
+    header.setAttribute("aria-controls", panelId);
+
+    var chevron = el("span", "chevron");
+    chevron.innerHTML = isOpen ? CHEVRON_DOWN : CHEVRON_RIGHT;
+    chevron.setAttribute("aria-hidden", "true");
+    header.appendChild(chevron);
+
+    var title = el("span", "product-accordion-title");
+    title.textContent = item.title;
+    header.appendChild(title);
+
+    var chips = el("div", "data-product-chips");
+    item.products.forEach(function (product) {
+      var chip = el("span", "data-product-chip data-product-chip--" + product.type.toLowerCase());
+      chip.textContent = product.name;
+      chips.appendChild(chip);
+    });
+    header.appendChild(chips);
+
+    accordion.appendChild(header);
+
+    var content = el("div", "product-accordion-content");
+    content.id = panelId;
+    if (!isOpen) { content.hidden = true; }
+
+    var description = el("p", "product-description");
+    description.style.margin = "0";
+    description.textContent = item.description;
+    content.appendChild(description);
+
+    var list = el("div", "product-list");
+    item.products.forEach(function (product) {
+      list.appendChild(buildProductRow(product));
+    });
+    content.appendChild(list);
+
+    var metadata = el("div", "metadata-row");
+    if (item.level) {
+      var levelTooltips = {
+        "User-level": "Consolida informações entre múltiplas instituições conectadas pelo mesmo usuário.",
+        "Institution-level": "Retorna dados da conta de um usuário em uma instituição financeira específica."
+      };
+      var levelTooltipText = levelTooltips[item.level] || "";
+
+      var levelChip = el("span", "metadata-chip level-chip");
+      levelChip.textContent = item.level;
+      if (levelTooltipText) {
+        levelChip.setAttribute("data-tooltip", levelTooltipText);
+        levelChip.setAttribute("tabindex", "0");
+        levelChip.setAttribute("aria-label", item.level + " — " + levelTooltipText);
+
+        levelChip.addEventListener("mouseenter", function () { showTooltip(levelChip); });
+        levelChip.addEventListener("mouseleave", hideTooltip);
+        levelChip.addEventListener("focus", function () { showTooltip(levelChip); });
+        levelChip.addEventListener("blur", hideTooltip);
+      }
+      metadata.appendChild(levelChip);
+    }
+    if (item.variables) {
+      var varsChip = el("span", "metadata-chip");
+      varsChip.textContent = item.variables;
+      metadata.appendChild(varsChip);
+    }
+    if (metadata.childNodes.length) { content.appendChild(metadata); }
+
+    accordion.appendChild(content);
+
+    header.addEventListener("click", function () {
+      var expanded = header.getAttribute("aria-expanded") === "true";
+      header.setAttribute("aria-expanded", expanded ? "false" : "true");
+      content.hidden = expanded;
+      chevron.innerHTML = expanded ? CHEVRON_RIGHT : CHEVRON_DOWN;
+    });
+
+    return accordion;
+  }
+
+  function buildGroup(group) {
+    var wrapper = el("div", "intermediate-group");
+
+    if (group.title) {
+      var title = el("div", "intermediate-group-title");
+      title.textContent = group.title;
+      wrapper.appendChild(title);
+    }
+
+    var accordionGroup = el("div", "product-accordion-group");
+    group.items.forEach(function (item) {
+      accordionGroup.appendChild(buildAccordion(item));
+    });
+    wrapper.appendChild(accordionGroup);
+
+    return wrapper;
+  }
+
+  function buildCategory(category) {
+    var bodyId = nextId("category");
+    var isOpen = category.open === true;
+
+    var section = el("section", "catalog-category");
+
+    var header = el("button", "category-header");
+    header.type = "button";
+    header.setAttribute("aria-expanded", isOpen ? "true" : "false");
+    header.setAttribute("aria-controls", bodyId);
+
+    var top = el("span", "category-header-top");
+
+    var chevron = el("span", "chevron");
+    chevron.innerHTML = isOpen ? CHEVRON_DOWN : CHEVRON_RIGHT;
+    chevron.setAttribute("aria-hidden", "true");
+    top.appendChild(chevron);
+
+    var title = el("span", "category-title");
+    title.textContent = category.title;
+    top.appendChild(title);
+
+    var badge = el("span", "category-count-badge");
+    badge.textContent = category.count;
+    top.appendChild(badge);
+
+    header.appendChild(top);
+
+    var description = el("span", "category-description");
+    description.textContent = category.description;
+    header.appendChild(description);
+
+    section.appendChild(header);
+
+    var body = el("div", "category-body");
+    body.id = bodyId;
+    if (!isOpen) { body.hidden = true; }
+
+    category.groups.forEach(function (group) {
+      body.appendChild(buildGroup(group));
+    });
+
+    section.appendChild(body);
+
+    header.addEventListener("click", function () {
+      var expanded = header.getAttribute("aria-expanded") === "true";
+      header.setAttribute("aria-expanded", expanded ? "false" : "true");
+      body.hidden = expanded;
+      chevron.innerHTML = expanded ? CHEVRON_RIGHT : CHEVRON_DOWN;
+    });
+
+    return section;
+  }
+
+  var root = document.getElementById("catalog-categories");
+  DATA.forEach(function (category) {
+    root.appendChild(buildCategory(category));
+  });
+})();
+</script>
+
+</body>
+</html>
