@@ -709,6 +709,198 @@
     background: rgba(255, 255, 255, 0.94);
   }
 
+  .category-overview {
+    width: 100%;
+    padding: 36px 16px;
+    border-bottom: 1px solid var(--grid-line);
+    background: #FFFFFF;
+  }
+
+  .category-overview-title {
+    margin: 0 0 20px;
+    color: var(--ink);
+    font-size: clamp(24px, 3.5vw, 32px);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+  }
+
+  .category-card-grid {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+    border-top: 1px solid var(--grid-line);
+    border-left: 1px solid var(--grid-line);
+  }
+
+  .category-overview-card {
+    position: relative;
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    align-self: stretch;
+    padding: 0;
+    border-right: 1px solid var(--grid-line);
+    border-bottom: 1px solid var(--grid-line);
+    background: #FFFFFF;
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer;
+    isolation: isolate;
+    overflow: hidden;
+    transform: translateY(0);
+    transition:
+      transform 0.18s cubic-bezier(0.2, 0.8, 0.2, 1),
+      box-shadow 0.18s ease,
+      border-color 0.18s ease,
+      background-color 0.18s ease;
+  }
+
+  .category-overview-card-header,
+  .category-overview-card-body {
+    position: relative;
+    z-index: 1;
+  }
+
+  .category-overview-card-header {
+    display: flex;
+    min-height: 48px;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 16px;
+    border-bottom: 1px solid var(--grid-line);
+    overflow: hidden;
+  }
+
+  .category-overview-card-header > :not(.category-overview-grid) {
+    position: relative;
+    z-index: 1;
+  }
+
+  .category-overview-card-body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 16px 16px 18px;
+  }
+
+  .category-overview-grid {
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    display: block;
+    width: 76px;
+    height: 100%;
+    pointer-events: none;
+    stroke: rgba(148, 163, 184, 0.24);
+    opacity: 0.56;
+  }
+
+  .category-overview-card:hover,
+  .category-overview-card:focus-visible {
+    z-index: 1;
+    border-color: #D8DEE8;
+    background: #FFFFFF;
+    box-shadow:
+      0 10px 24px rgba(15, 23, 42, 0.09),
+      0 2px 6px rgba(15, 23, 42, 0.06);
+    transform: translateY(-2px);
+  }
+
+  .category-overview-card:focus-visible {
+    outline: 2px solid #0047BB;
+    outline-offset: 3px;
+  }
+
+  .category-overview-icon {
+    display: flex;
+    width: 26px;
+    height: 26px;
+    align-items: center;
+    justify-content: center;
+    color: #0047BB;
+    transform: translateY(0);
+    transition: transform 0.18s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .category-overview-card:hover .category-overview-icon,
+  .category-overview-card:focus-visible .category-overview-icon {
+    transform: translateY(-1px);
+  }
+
+  .category-overview-icon svg {
+    display: block;
+    width: 18px;
+    height: 18px;
+  }
+
+  .category-overview-card-title {
+    margin: 0;
+    color: var(--ink);
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+    transition: color 0.16s ease;
+  }
+
+  .category-overview-card:hover .category-overview-card-title,
+  .category-overview-card:focus-visible .category-overview-card-title {
+    color: #0047BB;
+  }
+
+  .category-overview-card-description {
+    margin: 0;
+    color: var(--muted);
+    font-size: 12.5px;
+    line-height: 1.55;
+  }
+
+  .category-overview-card-cta {
+    display: inline-flex;
+    width: max-content;
+    height: 28px;
+    max-height: 0;
+    align-items: center;
+    gap: 6px;
+    margin-top: 0;
+    padding: 0 10px;
+    border: 1px solid #D8DEE8;
+    border-radius: 6px;
+    background: #FFFFFF;
+    overflow: hidden;
+    color: var(--ink-soft);
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.4;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateY(-3px);
+    transition:
+      max-height 0.18s cubic-bezier(0.2, 0.8, 0.2, 1),
+      margin-top 0.18s cubic-bezier(0.2, 0.8, 0.2, 1),
+      opacity 0.12s ease,
+      transform 0.18s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .category-overview-card-cta svg {
+    display: block;
+    width: 13px;
+    height: 13px;
+  }
+
+  .category-overview-card:hover .category-overview-card-cta,
+  .category-overview-card:focus-visible .category-overview-card-cta {
+    max-height: 28px;
+    margin-top: 10px;
+    opacity: 1;
+    transform: translateY(0);
+  }
+
   .catalog-eyebrow {
     color: #0047BB;
     font-size: 11px;
@@ -716,7 +908,7 @@
   }
 
   .catalog-title {
-    margin-top: 12px;
+    margin-top: 0;
     color: var(--ink);
     font-size: clamp(26px, 4vw, 38px);
     line-height: 1.08;
@@ -741,6 +933,7 @@
   .catalog-category {
     width: 100% !important;
     max-width: 100%;
+    scroll-margin-top: 4px;
     border: 0;
     border-bottom: 1px solid var(--grid-line);
     border-radius: 0;
@@ -780,6 +973,13 @@
 
   .category-header:hover { background: transparent; }
   .category-header:hover::after { opacity: 1; }
+
+  .catalog-category.is-card-target .category-header::after {
+    background: #EFF6FF;
+    opacity: 1;
+  }
+
+  .catalog-category.is-card-target .category-title { color: #0047BB; }
 
   .category-header-top,
   .category-summary {
@@ -996,6 +1196,7 @@
 
     .grid-box__art svg { width: 320px; }
 
+    .category-overview { padding: 28px 16px; }
     .catalog-intro { padding: 28px 16px 24px; }
     .catalog-categories { padding: 0; gap: 0; }
 
@@ -1039,13 +1240,37 @@
     .product-accordion-content { padding-inline: 16px; }
   }
 
+  @media (max-width: 520px) {
+    .category-card-grid { grid-template-columns: minmax(0, 1fr); }
+  }
+
+  @media (hover: none) {
+    .category-overview-card-cta {
+      max-height: 28px;
+      margin-top: 10px;
+      opacity: 1;
+      transform: none;
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .catalog-category,
     .category-body,
     .category-body-inner,
+    .category-overview-card,
+    .category-overview-grid,
+    .category-overview-icon,
+    .category-overview-card-cta,
     .chevron {
       transition-duration: 0.01ms !important;
       transition-delay: 0ms !important;
+    }
+
+    .category-overview-card:hover,
+    .category-overview-card:focus-visible,
+    .category-overview-card:hover .category-overview-icon,
+    .category-overview-card:focus-visible .category-overview-icon {
+      transform: none;
     }
   }
 
@@ -1122,9 +1347,91 @@
 <div class="preview">
   <section class="product-catalog">
 
-    <div class="catalog-intro">
+    <section class="category-overview" aria-labelledby="category-overview-title">
       <div class="catalog-eyebrow">Klavi Conecte</div>
-      <h2 class="catalog-title">Catálogo de Produtos</h2>
+      <h2 class="category-overview-title" id="category-overview-title">Categorias</h2>
+
+      <div class="category-card-grid">
+        <a class="category-overview-card" href="#catalog-category-statement" data-category-target="statement" aria-label="Abrir Statement no catálogo">
+          <div class="category-overview-card-header">
+            <svg class="category-overview-grid" aria-hidden="true" focusable="false">
+              <defs>
+                <pattern id="category-pattern-dashed-statement" width="20" height="20" patternUnits="userSpaceOnUse" x="-1" y="-1">
+                  <path d="M.5 20V.5H20" fill="none" stroke-dasharray="4 2"></path>
+                </pattern>
+              </defs>
+              <rect width="100%" height="100%" stroke-width="0" fill="url(#category-pattern-dashed-statement)"></rect>
+            </svg>
+            <span class="category-overview-icon" data-category-icon="statement" aria-hidden="true"></span>
+            <h3 class="category-overview-card-title">Statement</h3>
+          </div>
+          <div class="category-overview-card-body">
+            <p class="category-overview-card-description">Dados financeiros brutos e enriquecidos de contas, cartões, empréstimos, financiamentos, cheque especial e produtos de investimento.</p>
+            <span class="category-overview-card-cta">Ver no catálogo <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 3V12M8 12L11.5 8.5M8 12L4.5 8.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+        </a>
+
+        <a class="category-overview-card" href="#catalog-category-risk" data-category-target="risk" aria-label="Abrir Crédito e risco no catálogo">
+          <div class="category-overview-card-header">
+            <svg class="category-overview-grid" aria-hidden="true" focusable="false">
+              <defs>
+                <pattern id="category-pattern-dashed-risk" width="20" height="20" patternUnits="userSpaceOnUse" x="-1" y="-1">
+                  <path d="M.5 20V.5H20" fill="none" stroke-dasharray="4 2"></path>
+                </pattern>
+              </defs>
+              <rect width="100%" height="100%" stroke-width="0" fill="url(#category-pattern-dashed-risk)"></rect>
+            </svg>
+            <span class="category-overview-icon" data-category-icon="risk" aria-hidden="true"></span>
+            <h3 class="category-overview-card-title">Crédito e risco</h3>
+          </div>
+          <div class="category-overview-card-body">
+            <p class="category-overview-card-description">Variáveis derivadas e modelos de renda, despesas, capacidade financeira, risco de crédito, scores e concorrência de débitos.</p>
+            <span class="category-overview-card-cta">Ver no catálogo <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 3V12M8 12L11.5 8.5M8 12L4.5 8.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+        </a>
+
+        <a class="category-overview-card" href="#catalog-category-market" data-category-target="market" aria-label="Abrir Inteligência de mercado no catálogo">
+          <div class="category-overview-card-header">
+            <svg class="category-overview-grid" aria-hidden="true" focusable="false">
+              <defs>
+                <pattern id="category-pattern-dashed-market" width="20" height="20" patternUnits="userSpaceOnUse" x="-1" y="-1">
+                  <path d="M.5 20V.5H20" fill="none" stroke-dasharray="4 2"></path>
+                </pattern>
+              </defs>
+              <rect width="100%" height="100%" stroke-width="0" fill="url(#category-pattern-dashed-market)"></rect>
+            </svg>
+            <span class="category-overview-icon" data-category-icon="market" aria-hidden="true"></span>
+            <h3 class="category-overview-card-title">Inteligência de mercado</h3>
+          </div>
+          <div class="category-overview-card-body">
+            <p class="category-overview-card-description">Variáveis que ajudam a identificar a posse de produtos, padrões de comportamento, sinais de estilo de vida e principalidade bancária.</p>
+            <span class="category-overview-card-cta">Ver no catálogo <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 3V12M8 12L11.5 8.5M8 12L4.5 8.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+        </a>
+
+        <a class="category-overview-card" href="#catalog-category-kyc" data-category-target="kyc" aria-label="Abrir KYC no catálogo">
+          <div class="category-overview-card-header">
+            <svg class="category-overview-grid" aria-hidden="true" focusable="false">
+              <defs>
+                <pattern id="category-pattern-dashed-kyc" width="20" height="20" patternUnits="userSpaceOnUse" x="-1" y="-1">
+                  <path d="M.5 20V.5H20" fill="none" stroke-dasharray="4 2"></path>
+                </pattern>
+              </defs>
+              <rect width="100%" height="100%" stroke-width="0" fill="url(#category-pattern-dashed-kyc)"></rect>
+            </svg>
+            <span class="category-overview-icon" data-category-icon="kyc" aria-hidden="true"></span>
+            <h3 class="category-overview-card-title">KYC</h3>
+          </div>
+          <div class="category-overview-card-body">
+            <p class="category-overview-card-description">Dados cadastrais e de identidade de pessoas físicas e jurídicas, incluindo informações declaradas disponíveis via Open Finance.</p>
+            <span class="category-overview-card-cta">Ver no catálogo <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 3V12M8 12L11.5 8.5M8 12L4.5 8.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <div class="catalog-intro">
+      <h2 class="catalog-title">Catálogo</h2>
       <p class="catalog-description">Este catálogo resume os produtos disponíveis, o tipo de conta, o nível de agregação e o resultado esperado.</p>
     </div>
 
@@ -1141,7 +1448,7 @@
   /* Chevron discreto e delineado nos dois estados. */
   var CHEVRON_DOWN = '<svg class="anticon anticon-down" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 18 12" fill="none"><path d="M17.6253 0H15.8675C15.748 0 15.6355 0.0585939 15.5651 0.154688L8.90655 9.33281L2.24795 0.154688C2.17764 0.0585939 2.06514 0 1.94561 0H0.187797C0.0354531 0 -0.0536094 0.173438 0.0354531 0.297657L8.29952 11.6906C8.59952 12.1031 9.21358 12.1031 9.51124 11.6906L17.7753 0.297657C17.8667 0.173438 17.7776 0 17.6253 0Z" fill="currentColor"/></svg>';
   var CHEVRON_RIGHT = '<svg class="anticon anticon-right" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 18" fill="none"><path d="M10.8679 8.29237L0.302345 0.0400266C0.274737 0.0182911 0.241557 0.0047835 0.206618 0.00105482C0.171679 -0.00267386 0.136397 0.00352766 0.104823 0.0189473C0.0732498 0.0343669 0.0466661 0.0583793 0.0281245 0.0882266C0.00958281 0.118074 -0.00016456 0.152546 2.10193e-06 0.187683V1.9994C2.10193e-06 2.11425 0.0539084 2.2244 0.142971 2.29471L8.58045 8.883L0.142971 15.4713C0.0515646 15.5416 2.10193e-06 15.6517 2.10193e-06 15.7666V17.5783C2.10193e-06 17.7353 0.18047 17.8221 0.302345 17.726L10.8679 9.47362C10.9577 9.40357 11.0304 9.31397 11.0804 9.21162C11.1303 9.10928 11.1563 8.99689 11.1563 8.883C11.1563 8.7691 11.1303 8.65671 11.0804 8.55437C11.0304 8.45202 10.9577 8.36242 10.8679 8.29237Z" fill="currentColor"/></svg>';
-  var EXTERNAL_LINK = '<svg class="anticon anticon-export" xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 1024 1024" fill="currentColor"><path d="M880 112H632c-4.4 0-8 3.6-8 8v48c0 4.4 3.6 8 8 8h168v664H224V176h168c4.4 0 8-3.6 8-8v-48c0-4.4-3.6-8-8-8H144c-17.7 0-32 14.3-32 32v728c0 22.1 17.9 40 40 40h720c22.1 0 40-17.9 40-40V152c0-22.1-17.9-40-40-40z"/><path d="M564.3 264.3 430.6 398c-3.1 3.1-3.1 8.2 0 11.3l33.9 33.9c3.1 3.1 8.2 3.1 11.3 0l84.2-84.2V648c0 4.4 3.6 8 8 8h48c4.4 0 8-3.6 8-8V359l84.2 84.2c3.1 3.1 8.2 3.1 11.3 0l33.9-33.9c3.1-3.1 3.1-8.2 0-11.3L659.7 264.3a67.9 67.9 0 0 0-95.4 0z"/></svg>';
+  var EXTERNAL_LINK = '<svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M10.5 6.5V9.5C10.5 9.76522 10.3946 10.0196 10.2071 10.2071C10.0196 10.3946 9.76522 10.5 9.5 10.5H2.5C2.23478 10.5 1.98043 10.3946 1.79289 10.2071C1.60536 10.0196 1.5 9.76522 1.5 9.5V2.5C1.5 2.23478 1.60536 1.98043 1.79289 1.79289C1.98043 1.60536 2.23478 1.5 2.5 1.5H5.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="M10.5 1.5L6 6" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
   var ICONS = {
     statement: '<svg class="anticon anticon-file-text" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"><path d="M16.125 7.3125V6.1875C16.125 6.08437 16.0406 6 15.9375 6H6.9375C6.83437 6 6.75 6.08437 6.75 6.1875V7.3125C6.75 7.41563 6.83437 7.5 6.9375 7.5H15.9375C16.0406 7.5 16.125 7.41563 16.125 7.3125ZM6.9375 9.375C6.83437 9.375 6.75 9.45937 6.75 9.5625V10.6875C6.75 10.7906 6.83437 10.875 6.9375 10.875H11.25C11.3531 10.875 11.4375 10.7906 11.4375 10.6875V9.5625C11.4375 9.45937 11.3531 9.375 11.25 9.375H6.9375ZM10.3125 19.9688H4.875V3.46875H18V11.5312C18 11.6344 18.0844 11.7188 18.1875 11.7188H19.5C19.6031 11.7188 19.6875 11.6344 19.6875 11.5312V2.53125C19.6875 2.11641 19.3523 1.78125 18.9375 1.78125H3.9375C3.52266 1.78125 3.1875 2.11641 3.1875 2.53125V20.9062C3.1875 21.3211 3.52266 21.6562 3.9375 21.6562H10.3125C10.4156 21.6562 10.5 21.5719 10.5 21.4688V20.1562C10.5 20.0531 10.4156 19.9688 10.3125 19.9688ZM20.7586 21.1758L18.5719 18.9891C19.0945 18.2977 19.4062 17.4352 19.4062 16.5C19.4062 14.2219 17.5594 12.375 15.2812 12.375C13.0031 12.375 11.1562 14.2219 11.1562 16.5C11.1562 18.7781 13.0031 20.625 15.2812 20.625C16.1203 20.625 16.8984 20.3742 17.55 19.9453L19.7695 22.1648C19.807 22.2023 19.8539 22.2188 19.9008 22.2188C19.9477 22.2188 19.9969 22.2 20.032 22.1648L20.7586 21.4383C20.7759 21.4211 20.7896 21.4006 20.799 21.3781C20.8083 21.3556 20.8132 21.3314 20.8132 21.307C20.8132 21.2826 20.8083 21.2585 20.799 21.236C20.7896 21.2134 20.7759 21.193 20.7586 21.1758ZM15.2812 19.125C13.8305 19.125 12.6562 17.9508 12.6562 16.5C12.6562 15.0492 13.8305 13.875 15.2812 13.875C16.732 13.875 17.9062 15.0492 17.9062 16.5C17.9062 17.9508 16.732 19.125 15.2812 19.125Z" fill="currentColor"/></svg>',
@@ -1149,6 +1456,11 @@
     market: '<svg class="anticon anticon-fund" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 15" fill="none"><path d="m19.1959.00172-4.6688.5625c-.1547.01875-.2203.20859-.1101.31875l1.3898 1.38985-5.2969 5.29687L8.124 5.1861c-.14766-.14766-.38438-.14531-.52969 0L.05447 12.7283A.186.186 0 0 0 0 12.8607c0 .0496.01957.0972.05447.1324l1.05469 1.0594c.07266.0727.19218.0727.26484 0l6.48516-6.48281 2.38364 2.3836c.1476.1454.3843.1454.5296 0l6.361-6.35625 1.3898 1.38984c.0249.0248.0563.0421.0905.0499.0343.0078.07.0059.1033-.0056.0332-.0115.0625-.032.0846-.0594.0221-.0273.0361-.0603.0404-.0952l.5625-4.66875c.0164-.11953-.0868-.22266-.2086-.20625Z" fill="currentColor"/></svg>',
     kyc: '<svg class="anticon anticon-idcard" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 17" fill="none"><path d="M20.25 0H.75C.33516 0 0 .33516 0 .75v15c0 .4148.33516.75.75.75h19.5c.4148 0 .75-.3352.75-.75V.75c0-.41484-.3352-.75-.75-.75Zm-.9375 14.8125H1.6875V1.6875h17.625v13.125Zm-6.5086-7.40625h2.8922c.0305 0 .0539-.08437.0539-.1875v-1.125c0-.10313-.0234-.1875-.0539-.1875h-2.8922c-.0305 0-.0539.08437-.0539.1875v1.125c0 .10313.0234.1875.0539.1875Zm.1125 3.375h4.3523c.0915 0 .1664-.0843.1664-.1874V9.46875c0-.10312-.0749-.1875-.1664-.1875h-4.3523c-.0914 0-.1664.08438-.1664.1875v1.125c0 .1031.075.1874.1664.1874ZM3.75 12.0234h1.0289c.0984 0 .1781-.0773.1852-.1757.0891-1.1836 1.0781-2.1211 2.2781-2.1211s2.1891.9375 2.2781 2.1211c.007.0984.0867.1757.1852.1757h1.0289c.0254.0001.0506-.0051.074-.0151.0233-.01.0444-.0246.062-.0431.0175-.0184.0311-.0402.04-.064.0088-.0238.0127-.0492.0115-.0746-.0657-1.2493-.75-2.3368-1.7484-2.9555.4403-.484.6836-1.1152.682-1.7695-.0016-1.4508-1.1711-2.625-2.6125-2.625-1.4414 0-2.6109 1.1742-2.6109 2.625 0 .682.2578 1.3008.682 1.7695-.5083.315-.9328.7483-1.2373 1.263-.3045.5146-.4799 1.0955-.5112 1.6925-.0094.1078.075.1968.1828.1968Zm3.4922-6.1406c.668 0 1.2117.5461 1.2117 1.2188 0 .6726-.5437 1.2187-1.2117 1.2187-.668 0-1.2117-.5461-1.2117-1.2187 0-.6727.5437-1.2188 1.2117-1.2188Z" fill="currentColor"/></svg>'
   };
+
+  document.querySelectorAll("[data-category-icon]").forEach(function (icon) {
+    var key = icon.getAttribute("data-category-icon");
+    icon.innerHTML = ICONS[key] || "";
+  });
 
   var THEME = {
     statement: { accent: "#0047BB", tint: "#EFF6FF" },
@@ -1448,6 +1760,8 @@
     var theme = THEME[category.key] || THEME.statement;
 
     var section = el("section", "catalog-category");
+    section.id = "catalog-category-" + category.key;
+    section.setAttribute("data-category-key", category.key);
 
     var header = el("button", "category-header");
     header.type = "button";
@@ -1522,6 +1836,44 @@
   var root = document.getElementById("catalog-categories");
   DATA.forEach(function (category) {
     root.appendChild(buildCategory(category));
+  });
+
+  document.querySelectorAll("[data-category-target]").forEach(function (card) {
+    card.addEventListener("click", function (event) {
+      event.preventDefault();
+
+      var key = card.getAttribute("data-category-target");
+      var section = document.getElementById("catalog-category-" + key);
+      if (!section) return;
+
+      var header = section.querySelector(".category-header");
+      if (!header) return;
+
+      if (header.getAttribute("aria-expanded") !== "true") {
+        header.click();
+      }
+
+      var reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      section.scrollIntoView({
+        behavior: reducedMotion ? "auto" : "smooth",
+        block: "start"
+      });
+
+      document.querySelectorAll(".catalog-category.is-card-target").forEach(function (item) {
+        item.classList.remove("is-card-target");
+      });
+      section.classList.add("is-card-target");
+      header.focus({ preventScroll: true });
+      header.addEventListener("blur", function clearCardTarget() {
+        section.classList.remove("is-card-target");
+      }, { once: true });
+
+      try {
+        window.history.replaceState(null, "", "#" + section.id);
+      } catch (error) {
+        window.location.hash = section.id;
+      }
+    });
   });
 
   /* Empilha chips somente nas linhas em que título + chips não cabem lado a lado. */
