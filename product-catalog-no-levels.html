@@ -863,6 +863,28 @@
   var totalProducts = DATA.reduce(function (sum, cat) { return sum + cat.count; }, 0);
   document.getElementById("catalog-stat").innerHTML =
     "<strong>" + totalProducts + "</strong> produtos em <strong>" + DATA.length + "</strong> categorias";
+
+  /* ---------- avisa o Archbee da própria altura ----------
+     Este HTML roda num <iframe> de origem diferente, então o Archbee não
+     consegue medir a altura de dentro por conta própria (bloqueio de
+     segurança entre origens). Aqui a gente mede e avisa via postMessage
+     sempre que o tamanho mudar — inclusive quando um accordion abre/fecha,
+     graças ao ResizeObserver. */
+  function reportHeight() {
+    var height = document.body.scrollHeight;
+    window.parent.postMessage({ type: "klavi-catalog-resize", height: height }, "*");
+  }
+
+  reportHeight();
+
+  var resizeObserver = new ResizeObserver(function () {
+    reportHeight();
+  });
+  resizeObserver.observe(document.body);
+
+  if (document.fonts) {
+    document.fonts.ready.then(reportHeight);
+  }
 })();
 </script>
 
