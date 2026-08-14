@@ -25,73 +25,6 @@
     --pj-bg: #FDF2F8;
     --pj-fg: #BE185D;
     --mono: 'JetBrains Mono', Menlo, monospace;
-
-    /* cor de interação (hover, foco, ícones) e identidade por categoria */
-    --icon-accent: #0047BB;
-    --icon-tint: #EFF6FF;
-    --accent-risk: #D97706;
-    --tint-risk: #FFFBEB;
-    --accent-market: #7C3AED;
-    --tint-market: #F5F3FF;
-    --accent-kyc: #059669;
-    --tint-kyc: #ECFDF5;
-  }
-
-  :root.dark {
-    --ink: #F1F5F9;
-    --ink-soft: #CBD5E1;
-    --muted: #94A3B8;
-    --faint: #64748B;
-    --border: #2D3B52;
-    --border-soft: #202B3D;
-    --surface: #141E30;
-    --canvas: #0B1220;
-    --hover-tint: #1B2740;
-    --pf-bg: #1E2A52;
-    --pf-fg: #A5B4FC;
-    --pj-bg: #3B1D3F;
-    --pj-fg: #F0ABDE;
-
-    --icon-accent: #60A5FA;
-    --icon-tint: rgba(96, 165, 250, 0.16);
-    --accent-risk: #FBBF24;
-    --tint-risk: rgba(251, 191, 36, 0.14);
-    --accent-market: #A78BFA;
-    --tint-market: rgba(167, 139, 250, 0.16);
-    --accent-kyc: #34D399;
-    --tint-kyc: rgba(52, 211, 153, 0.16);
-  }
-
-  /* ---------- camada de segurança: segue o tema do sistema/navegador ----------
-     Funciona sozinha, sem depender de JS nem de mensagem do Archbee.
-     Se algum dia o postMessage funcionar e aplicar a classe ".dark" (acima),
-     ela tem prioridade (vem depois no CSS); isso aqui é só o modo padrão
-     pra quando não há nenhuma classe explícita definida. */
-  @media (prefers-color-scheme: dark) {
-    :root:not(.light) {
-      --ink: #F1F5F9;
-      --ink-soft: #CBD5E1;
-      --muted: #94A3B8;
-      --faint: #64748B;
-      --border: #2D3B52;
-      --border-soft: #202B3D;
-      --surface: #141E30;
-      --canvas: #0B1220;
-      --hover-tint: #1B2740;
-      --pf-bg: #1E2A52;
-      --pf-fg: #A5B4FC;
-      --pj-bg: #3B1D3F;
-      --pj-fg: #F0ABDE;
-
-      --icon-accent: #60A5FA;
-      --icon-tint: rgba(96, 165, 250, 0.16);
-      --accent-risk: #FBBF24;
-      --tint-risk: rgba(251, 191, 36, 0.14);
-      --accent-market: #A78BFA;
-      --tint-market: rgba(167, 139, 250, 0.16);
-      --accent-kyc: #34D399;
-      --tint-kyc: rgba(52, 211, 153, 0.16);
-    }
   }
 
   body {
@@ -126,7 +59,7 @@
     font-weight: 600;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    color: var(--icon-accent);
+    color: #0047BB;
     margin: 0 0 10px;
   }
 
@@ -135,7 +68,7 @@
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: var(--icon-accent);
+    background: #0047BB;
   }
 
   .catalog-title {
@@ -197,7 +130,7 @@
   }
 
   .category-header:focus-visible {
-    outline: 2px solid var(--icon-accent);
+    outline: 2px solid #0047BB;
     outline-offset: 6px;
   }
 
@@ -247,7 +180,7 @@
     font-variant-numeric: tabular-nums;
   }
 
-  .category-header:hover .category-title { color: var(--icon-accent); }
+  .category-header:hover .category-title { color: #0047BB; }
   .category-header:hover .chevron { color: var(--ink-soft); }
 
   .category-description {
@@ -343,18 +276,18 @@
     bottom: 8px;
     width: 3px;
     border-radius: 0 3px 3px 0;
-    background: var(--icon-accent);
+    background: #0047BB;
     opacity: 0;
     transition: opacity 0.15s ease;
   }
 
   .product-accordion-header:hover { background: var(--hover-tint); }
   .product-accordion-header:hover::before { opacity: 1; }
-  .product-accordion-header:hover .product-accordion-title { color: var(--icon-accent); }
+  .product-accordion-header:hover .product-accordion-title { color: #0047BB; }
   .product-accordion-header:hover .chevron { color: var(--ink-soft); }
 
   .product-accordion-header:focus-visible {
-    outline: 2px solid var(--icon-accent);
+    outline: 2px solid #0047BB;
     outline-offset: -2px;
   }
 
@@ -395,7 +328,7 @@
     align-items: flex-start;
     gap: 14px;
     align-self: stretch;
-    background: var(--surface);
+    background: #FFFFFF;
   }
 
   .product-accordion-content[hidden] { display: none; }
@@ -462,9 +395,9 @@
     border-radius: 4px;
   }
 
-  .product-name:hover, .product-name:focus-visible { color: var(--icon-accent); text-decoration: underline; }
+  .product-name:hover, .product-name:focus-visible { color: #0047BB; text-decoration: underline; }
 
-  .product-name:focus-visible { outline: 2px solid var(--icon-accent); outline-offset: 2px; }
+  .product-name:focus-visible { outline: 2px solid #0047BB; outline-offset: 2px; }
 
   .external-link-icon { width: 11px; height: 11px; flex-shrink: 0; display: flex; opacity: 0.6; }
 
@@ -491,7 +424,7 @@
   .level-chip { cursor: help; }
 
   .level-chip:focus-visible {
-    outline: 2px solid var(--icon-accent);
+    outline: 2px solid #0047BB;
     outline-offset: 2px;
     border-radius: 111px;
   }
@@ -505,7 +438,7 @@
     max-width: 240px;
     padding: 9px 11px;
     border-radius: 9px;
-    background: #0F172A;
+    background: var(--ink);
     color: #F1F5F9;
     font-family: Inter, sans-serif;
     font-size: 12px;
@@ -525,7 +458,7 @@
     bottom: -4px;
     width: 8px;
     height: 8px;
-    background: #0F172A;
+    background: var(--ink);
     transform: translateX(-50%) rotate(45deg);
   }
 </style>
@@ -563,15 +496,15 @@
   };
 
   var THEME = {
-    statement: { accent: "var(--icon-accent)", tint: "var(--icon-tint)" },
-    risk: { accent: "var(--accent-risk)", tint: "var(--tint-risk)" },
-    market: { accent: "var(--accent-market)", tint: "var(--tint-market)" },
-    kyc: { accent: "var(--accent-kyc)", tint: "var(--tint-kyc)" }
+    statement: { accent: "#0047BB", tint: "#EFF6FF" },
+    risk: { accent: "#D97706", tint: "#FFFBEB" },
+    market: { accent: "#7C3AED", tint: "#F5F3FF" },
+    kyc: { accent: "#059669", tint: "#ECFDF5" }
   };
 
   // ícones de categoria: sempre azul (Klavi primary), independente da categoria
-  var ICON_ACCENT = "var(--icon-accent)";
-  var ICON_TINT = "var(--icon-tint)";
+  var ICON_ACCENT = "#0047BB";
+  var ICON_TINT = "#EFF6FF";
 
   var DATA = [
     {
@@ -930,23 +863,6 @@
   var totalProducts = DATA.reduce(function (sum, cat) { return sum + cat.count; }, 0);
   document.getElementById("catalog-stat").innerHTML =
     "<strong>" + totalProducts + "</strong> produtos em <strong>" + DATA.length + "</strong> categorias";
-
-  /* ---------- sincronização de tema com a página do Archbee ----------
-     Este HTML roda num <iframe> de origem diferente (GitHub Pages),
-     então não tem como ler a classe "dark" da página de fora diretamente
-     (bloqueio de segurança do navegador entre origens). O Custom JS do
-     Archbee manda um postMessage toda vez que o tema muda; aqui a gente
-     só escuta e aplica a classe "dark" na raiz deste documento. */
-  window.addEventListener("message", function (event) {
-    if (!event.data || event.data.type !== "archbee-theme") { return; }
-    document.documentElement.classList.toggle("dark", event.data.theme === "dark");
-  });
-
-  // avisa a página-pai que já está pronto pra receber o tema
-  // (evita perder a primeira mensagem se ela chegar antes do iframe montar)
-  if (window.parent) {
-    window.parent.postMessage({ type: "archbee-theme-ready" }, "*");
-  }
 })();
 </script>
 
