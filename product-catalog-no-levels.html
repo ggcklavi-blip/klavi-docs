@@ -62,6 +62,38 @@
     --tint-kyc: rgba(52, 211, 153, 0.16);
   }
 
+  /* ---------- camada de segurança: segue o tema do sistema/navegador ----------
+     Funciona sozinha, sem depender de JS nem de mensagem do Archbee.
+     Se algum dia o postMessage funcionar e aplicar a classe ".dark" (acima),
+     ela tem prioridade (vem depois no CSS); isso aqui é só o modo padrão
+     pra quando não há nenhuma classe explícita definida. */
+  @media (prefers-color-scheme: dark) {
+    :root:not(.light) {
+      --ink: #F1F5F9;
+      --ink-soft: #CBD5E1;
+      --muted: #94A3B8;
+      --faint: #64748B;
+      --border: #2D3B52;
+      --border-soft: #202B3D;
+      --surface: #141E30;
+      --canvas: #0B1220;
+      --hover-tint: #1B2740;
+      --pf-bg: #1E2A52;
+      --pf-fg: #A5B4FC;
+      --pj-bg: #3B1D3F;
+      --pj-fg: #F0ABDE;
+
+      --icon-accent: #60A5FA;
+      --icon-tint: rgba(96, 165, 250, 0.16);
+      --accent-risk: #FBBF24;
+      --tint-risk: rgba(251, 191, 36, 0.14);
+      --accent-market: #A78BFA;
+      --tint-market: rgba(167, 139, 250, 0.16);
+      --accent-kyc: #34D399;
+      --tint-kyc: rgba(52, 211, 153, 0.16);
+    }
+  }
+
   body {
     margin: 0;
     background: transparent;
