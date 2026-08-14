@@ -102,7 +102,8 @@
     width: 100%;
     flex-direction: column;
     align-items: flex-start;
-    gap: 36px;
+    /* 10px de padding em cada header + 16px de gap = 36px de respiro */
+    gap: 16px;
   }
 
   .catalog-category {
@@ -121,12 +122,13 @@
     align-self: stretch;
     background: none;
     border: 0;
-    padding: 0;
+    padding: 10px 12px;
     font: inherit;
     color: inherit;
     cursor: pointer;
     text-align: left;
-    border-radius: 10px;
+    border-radius: 12px;
+    transition: background 0.15s ease;
   }
 
   .category-header:focus-visible {
@@ -153,6 +155,8 @@
     width: 30px;
     height: 30px;
     border-radius: 8px;
+    border: 1px solid var(--border);
+    background: transparent;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -180,6 +184,7 @@
     font-variant-numeric: tabular-nums;
   }
 
+  .category-header:hover { background: var(--hover-tint); }
   .category-header:hover .category-title { color: #0047BB; }
   .category-header:hover .chevron { color: var(--ink-soft); }
 
@@ -236,10 +241,10 @@
     flex-direction: column;
     align-items: flex-start;
     align-self: stretch;
-    border-radius: 14px;
+    border-radius: 12px;
     border: 1px solid var(--border);
     background: var(--surface);
-    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03), 0 2px 8px rgba(15, 23, 42, 0.04);
+    box-shadow: none;
     overflow: hidden;
   }
 
@@ -659,7 +664,6 @@
 
   // ícones de categoria: sempre azul (Klavi primary), independente da categoria
   var ICON_ACCENT = "#0047BB";
-  var ICON_TINT = "#EFF6FF";
 
   var DATA = [
     {
@@ -953,7 +957,6 @@
     top.appendChild(chevron);
 
     var iconBadge = el("span", "category-icon");
-    iconBadge.style.background = ICON_TINT;
     iconBadge.style.color = ICON_ACCENT;
     iconBadge.innerHTML = ICONS[category.key] || ICONS.statement;
     iconBadge.setAttribute("aria-hidden", "true");
