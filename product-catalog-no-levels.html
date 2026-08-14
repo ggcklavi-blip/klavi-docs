@@ -25,6 +25,41 @@
     --pj-bg: #FDF2F8;
     --pj-fg: #BE185D;
     --mono: 'JetBrains Mono', Menlo, monospace;
+
+    /* cor de interação (hover, foco, ícones) e identidade por categoria */
+    --icon-accent: #0047BB;
+    --icon-tint: #EFF6FF;
+    --accent-risk: #D97706;
+    --tint-risk: #FFFBEB;
+    --accent-market: #7C3AED;
+    --tint-market: #F5F3FF;
+    --accent-kyc: #059669;
+    --tint-kyc: #ECFDF5;
+  }
+
+  :root.dark {
+    --ink: #F1F5F9;
+    --ink-soft: #CBD5E1;
+    --muted: #94A3B8;
+    --faint: #64748B;
+    --border: #2D3B52;
+    --border-soft: #202B3D;
+    --surface: #141E30;
+    --canvas: #0B1220;
+    --hover-tint: #1B2740;
+    --pf-bg: #1E2A52;
+    --pf-fg: #A5B4FC;
+    --pj-bg: #3B1D3F;
+    --pj-fg: #F0ABDE;
+
+    --icon-accent: #60A5FA;
+    --icon-tint: rgba(96, 165, 250, 0.16);
+    --accent-risk: #FBBF24;
+    --tint-risk: rgba(251, 191, 36, 0.14);
+    --accent-market: #A78BFA;
+    --tint-market: rgba(167, 139, 250, 0.16);
+    --accent-kyc: #34D399;
+    --tint-kyc: rgba(52, 211, 153, 0.16);
   }
 
   body {
@@ -59,7 +94,7 @@
     font-weight: 600;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    color: #0047BB;
+    color: var(--icon-accent);
     margin: 0 0 10px;
   }
 
@@ -68,7 +103,7 @@
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: #0047BB;
+    background: var(--icon-accent);
   }
 
   .catalog-title {
@@ -130,7 +165,7 @@
   }
 
   .category-header:focus-visible {
-    outline: 2px solid #0047BB;
+    outline: 2px solid var(--icon-accent);
     outline-offset: 6px;
   }
 
@@ -180,12 +215,12 @@
     font-variant-numeric: tabular-nums;
   }
 
-  .category-header:hover .category-title { color: #0047BB; }
+  .category-header:hover .category-title { color: var(--icon-accent); }
   .category-header:hover .chevron { color: var(--ink-soft); }
 
   .category-description {
     align-self: stretch;
-    margin: 0 0 0 40px;
+    margin: 0;
     color: var(--muted);
     font-size: 14.5px;
     line-height: 1.6;
@@ -198,7 +233,7 @@
     align-items: flex-start;
     align-self: stretch;
     gap: 22px;
-    padding-left: 40px;
+    padding-left: 28px;
   }
 
   .category-body[hidden] { display: none; }
@@ -276,18 +311,18 @@
     bottom: 8px;
     width: 3px;
     border-radius: 0 3px 3px 0;
-    background: #0047BB;
+    background: var(--icon-accent);
     opacity: 0;
     transition: opacity 0.15s ease;
   }
 
   .product-accordion-header:hover { background: var(--hover-tint); }
   .product-accordion-header:hover::before { opacity: 1; }
-  .product-accordion-header:hover .product-accordion-title { color: #0047BB; }
+  .product-accordion-header:hover .product-accordion-title { color: var(--icon-accent); }
   .product-accordion-header:hover .chevron { color: var(--ink-soft); }
 
   .product-accordion-header:focus-visible {
-    outline: 2px solid #0047BB;
+    outline: 2px solid var(--icon-accent);
     outline-offset: -2px;
   }
 
@@ -328,7 +363,7 @@
     align-items: flex-start;
     gap: 14px;
     align-self: stretch;
-    background: #FFFFFF;
+    background: var(--surface);
   }
 
   .product-accordion-content[hidden] { display: none; }
@@ -395,9 +430,9 @@
     border-radius: 4px;
   }
 
-  .product-name:hover, .product-name:focus-visible { color: #0047BB; text-decoration: underline; }
+  .product-name:hover, .product-name:focus-visible { color: var(--icon-accent); text-decoration: underline; }
 
-  .product-name:focus-visible { outline: 2px solid #0047BB; outline-offset: 2px; }
+  .product-name:focus-visible { outline: 2px solid var(--icon-accent); outline-offset: 2px; }
 
   .external-link-icon { width: 11px; height: 11px; flex-shrink: 0; display: flex; opacity: 0.6; }
 
@@ -424,7 +459,7 @@
   .level-chip { cursor: help; }
 
   .level-chip:focus-visible {
-    outline: 2px solid #0047BB;
+    outline: 2px solid var(--icon-accent);
     outline-offset: 2px;
     border-radius: 111px;
   }
@@ -438,7 +473,7 @@
     max-width: 240px;
     padding: 9px 11px;
     border-radius: 9px;
-    background: var(--ink);
+    background: #0F172A;
     color: #F1F5F9;
     font-family: Inter, sans-serif;
     font-size: 12px;
@@ -458,7 +493,7 @@
     bottom: -4px;
     width: 8px;
     height: 8px;
-    background: var(--ink);
+    background: #0F172A;
     transform: translateX(-50%) rotate(45deg);
   }
 </style>
@@ -496,11 +531,15 @@
   };
 
   var THEME = {
-    statement: { accent: "#0047BB", tint: "#EFF6FF" },
-    risk: { accent: "#D97706", tint: "#FFFBEB" },
-    market: { accent: "#7C3AED", tint: "#F5F3FF" },
-    kyc: { accent: "#059669", tint: "#ECFDF5" }
+    statement: { accent: "var(--icon-accent)", tint: "var(--icon-tint)" },
+    risk: { accent: "var(--accent-risk)", tint: "var(--tint-risk)" },
+    market: { accent: "var(--accent-market)", tint: "var(--tint-market)" },
+    kyc: { accent: "var(--accent-kyc)", tint: "var(--tint-kyc)" }
   };
+
+  // ícones de categoria: sempre azul (Klavi primary), independente da categoria
+  var ICON_ACCENT = "var(--icon-accent)";
+  var ICON_TINT = "var(--icon-tint)";
 
   var DATA = [
     {
@@ -600,6 +639,7 @@
   ];
 
   var uid = 0;
+  var categoryControls = []; // {header, body, chevron} de cada categoria — usado pra fechar as outras ao abrir uma
   function nextId(prefix) { uid += 1; return prefix + "-" + uid; }
 
   /* ---------- tooltip: elemento único, fora de qualquer overflow:hidden ---------- */
@@ -794,8 +834,8 @@
     top.appendChild(chevron);
 
     var iconBadge = el("span", "category-icon");
-    iconBadge.style.background = theme.tint;
-    iconBadge.style.color = theme.accent;
+    iconBadge.style.background = ICON_TINT;
+    iconBadge.style.color = ICON_ACCENT;
     iconBadge.innerHTML = ICONS[category.key] || ICONS.statement;
     iconBadge.setAttribute("aria-hidden", "true");
     top.appendChild(iconBadge);
@@ -810,15 +850,15 @@
 
     header.appendChild(top);
 
-    var description = el("span", "category-description");
-    description.textContent = category.description;
-    header.appendChild(description);
-
     section.appendChild(header);
 
     var body = el("div", "category-body");
     body.id = bodyId;
     body.hidden = true;
+
+    var description = el("p", "category-description");
+    description.textContent = category.description;
+    body.appendChild(description);
 
     category.groups.forEach(function (group) {
       body.appendChild(buildGroup(group, theme));
@@ -826,11 +866,25 @@
 
     section.appendChild(body);
 
+    categoryControls.push({ header: header, body: body, chevron: chevron });
+
     header.addEventListener("click", function () {
       var expanded = header.getAttribute("aria-expanded") === "true";
-      header.setAttribute("aria-expanded", expanded ? "false" : "true");
-      body.hidden = expanded;
-      chevron.innerHTML = expanded ? CHEVRON_RIGHT : CHEVRON_DOWN;
+      var willOpen = !expanded;
+
+      if (willOpen) {
+        categoryControls.forEach(function (ctrl) {
+          if (ctrl.header !== header) {
+            ctrl.header.setAttribute("aria-expanded", "false");
+            ctrl.body.hidden = true;
+            ctrl.chevron.innerHTML = CHEVRON_RIGHT;
+          }
+        });
+      }
+
+      header.setAttribute("aria-expanded", willOpen ? "true" : "false");
+      body.hidden = !willOpen;
+      chevron.innerHTML = willOpen ? CHEVRON_DOWN : CHEVRON_RIGHT;
     });
 
     return section;
@@ -844,6 +898,23 @@
   var totalProducts = DATA.reduce(function (sum, cat) { return sum + cat.count; }, 0);
   document.getElementById("catalog-stat").innerHTML =
     "<strong>" + totalProducts + "</strong> produtos em <strong>" + DATA.length + "</strong> categorias";
+
+  /* ---------- sincronização de tema com a página do Archbee ----------
+     Este HTML roda num <iframe> de origem diferente (GitHub Pages),
+     então não tem como ler a classe "dark" da página de fora diretamente
+     (bloqueio de segurança do navegador entre origens). O Custom JS do
+     Archbee manda um postMessage toda vez que o tema muda; aqui a gente
+     só escuta e aplica a classe "dark" na raiz deste documento. */
+  window.addEventListener("message", function (event) {
+    if (!event.data || event.data.type !== "archbee-theme") { return; }
+    document.documentElement.classList.toggle("dark", event.data.theme === "dark");
+  });
+
+  // avisa a página-pai que já está pronto pra receber o tema
+  // (evita perder a primeira mensagem se ela chegar antes do iframe montar)
+  if (window.parent) {
+    window.parent.postMessage({ type: "archbee-theme-ready" }, "*");
+  }
 })();
 </script>
 
