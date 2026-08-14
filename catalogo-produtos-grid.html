@@ -28,8 +28,10 @@
   }
 
   body {
+    display: flow-root;
     margin: 0;
-    background: transparent;
+    padding: 0;
+    background: #FFFFFF;
     font-family: Inter, -apple-system, sans-serif;
     color: var(--ink);
     -webkit-font-smoothing: antialiased;
@@ -169,6 +171,8 @@
     height: 18px;
     flex-shrink: 0;
     display: flex;
+    align-items: center;
+    justify-content: center;
     color: var(--faint);
     transition: color 0.15s ease;
   }
@@ -629,12 +633,37 @@
     --grid-surface: #FBFCFE;
   }
 
+  html,
   body { background: #FFFFFF; }
   .demo-wrap {
     display: block;
     width: 100%;
     max-width: 960px;
     margin: 0 !important;
+  }
+
+  .catalog-frame {
+    width: calc(100% - 8px);
+    max-width: 960px;
+    margin: 4px;
+    border: 1px solid var(--grid-line);
+    background: #FFFFFF;
+    overflow: hidden;
+  }
+
+  .catalog-frame .demo-wrap,
+  .catalog-frame .preview,
+  .catalog-frame .product-catalog {
+    max-width: none;
+  }
+
+  .catalog-frame .grid-box {
+    border: 0;
+    border-bottom: 1px solid var(--grid-line);
+  }
+
+  .catalog-frame .product-catalog {
+    border: 0;
   }
 
   .grid-box {
@@ -654,6 +683,28 @@
       var(--grid-line-soft) calc(100% - 63px),
       transparent calc(100% - 63px)
     );
+  }
+
+  .grid-box::before,
+  .grid-box::after {
+    content: "";
+    position: absolute;
+    z-index: 5;
+    top: 0;
+    bottom: 0;
+    width: 64px;
+    background: #FFFFFF;
+    pointer-events: none;
+  }
+
+  .grid-box::before {
+    left: 0;
+    border-right: 1px solid var(--grid-line-soft);
+  }
+
+  .grid-box::after {
+    right: 0;
+    border-left: 1px solid var(--grid-line-soft);
   }
 
   .grid-box__art { filter: drop-shadow(0 8px 18px rgba(15, 23, 42, 0.12)); }
@@ -816,7 +867,7 @@
     width: 100%;
     min-width: 0;
     max-width: 100%;
-    gap: 24px;
+    gap: 16px;
     padding-block: 0;
     padding-inline: 80px;
     opacity: 0;
@@ -851,7 +902,7 @@
   }
 
   .intermediate-group + .intermediate-group {
-    margin-top: 8px;
+    margin-top: 0;
   }
 
   .intermediate-group-title {
@@ -898,6 +949,9 @@
     font-size: 13px;
     line-height: 1.35;
   }
+
+  .product-accordion-title-level { white-space: nowrap; }
+  .product-accordion-title--with-level .product-accordion-title-level { display: block; }
 
   .data-product-chips {
     min-width: 0;
@@ -965,7 +1019,17 @@
   @media (max-width: 680px) {
     .product-catalog {
       border-radius: 0;
-      background-image: none;
+      background-image: linear-gradient(
+        to right,
+        transparent 39px,
+        var(--grid-line-soft) 39px,
+        var(--grid-line-soft) 40px,
+        transparent 40px,
+        transparent calc(100% - 40px),
+        var(--grid-line-soft) calc(100% - 40px),
+        var(--grid-line-soft) calc(100% - 39px),
+        transparent calc(100% - 39px)
+      );
     }
 
     .demo-wrap,
@@ -974,31 +1038,62 @@
     .grid-box {
       height: 320px;
       border-radius: 0;
-      background-image: none;
+      background-image: linear-gradient(
+        to right,
+        transparent 39px,
+        var(--grid-line-soft) 39px,
+        var(--grid-line-soft) 40px,
+        transparent 40px,
+        transparent calc(100% - 40px),
+        var(--grid-line-soft) calc(100% - 40px),
+        var(--grid-line-soft) calc(100% - 39px),
+        transparent calc(100% - 39px)
+      );
     }
+
+    .grid-box::before,
+    .grid-box::after { width: 40px; }
 
     .grid-box__art svg { width: 320px; }
 
-    .catalog-intro { padding: 28px 20px 24px; }
+    .catalog-intro { padding: 28px 56px 24px; }
     .catalog-categories { padding: 0; gap: 0; }
-    .category-header { padding-right: 20px; padding-left: 20px; }
-    .category-header::after { right: 0; left: 0; }
-    .category-body-inner {
-      padding-inline: 20px;
-    }
-    .catalog-category.is-open .category-body-inner {
-      padding-inline: 20px;
-    }
+
+    .category-header { padding-inline: 56px; }
+    .category-header::after { right: 40px; left: 40px; }
+    .category-body-inner,
+    .catalog-category.is-open .category-body-inner { padding-inline: 56px; }
 
     .product-accordion-header {
-      grid-template-columns: 18px minmax(120px, 1fr) auto;
+      display: grid;
+      grid-template-columns: 18px minmax(0, 1fr) auto;
+      align-items: center;
+    }
+
+    .product-accordion-title {
+      min-width: 0;
+      align-self: center;
     }
 
     .data-product-chips {
       grid-column: 3;
-      justify-self: end;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
       margin-left: 0;
       flex-wrap: nowrap;
+    }
+
+    .product-accordion-header.chips-stacked .data-product-chips {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 4px;
+    }
+
+    .product-accordion-header.chips-stacked .data-product-chip {
+      justify-content: center;
     }
 
     .product-accordion-content { padding-inline: 16px; }
@@ -1018,6 +1113,7 @@
 </head>
 <body>
 
+<div class="catalog-frame">
 <div class="demo-wrap" style="margin: 0 0 28px 0;">
   <div class="grid-box">
     <svg class="grid-svg grid-svg--skew" aria-hidden="true">
@@ -1096,20 +1192,22 @@
 
   </section>
 </div>
+</div>
 
 <script>
 (function () {
   "use strict";
 
-  var CHEVRON_DOWN = '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-  var CHEVRON_RIGHT = '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-  var EXTERNAL_LINK = '<svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M10.5 6.5V9.5C10.5 9.76522 10.3946 10.0196 10.2071 10.2071C10.0196 10.3946 9.76522 10.5 9.5 10.5H2.5C2.23478 10.5 1.98043 10.3946 1.79289 10.2071C1.60536 10.0196 1.5 9.76522 1.5 9.5V2.5C1.5 2.23478 1.60536 1.98043 1.79289 1.79289C1.98043 1.60536 2.23478 1.5 2.5 1.5H5.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="M10.5 1.5L6 6" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  /* Chevron discreto e delineado nos dois estados. */
+  var CHEVRON_DOWN = '<svg class="anticon anticon-down" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 18 12" fill="none"><path d="M17.6253 0H15.8675C15.748 0 15.6355 0.0585939 15.5651 0.154688L8.90655 9.33281L2.24795 0.154688C2.17764 0.0585939 2.06514 0 1.94561 0H0.187797C0.0354531 0 -0.0536094 0.173438 0.0354531 0.297657L8.29952 11.6906C8.59952 12.1031 9.21358 12.1031 9.51124 11.6906L17.7753 0.297657C17.8667 0.173438 17.7776 0 17.6253 0Z" fill="currentColor"/></svg>';
+  var CHEVRON_RIGHT = '<svg class="anticon anticon-right" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 18" fill="none"><path d="M10.8679 8.29237L0.302345 0.0400266C0.274737 0.0182911 0.241557 0.0047835 0.206618 0.00105482C0.171679 -0.00267386 0.136397 0.00352766 0.104823 0.0189473C0.0732498 0.0343669 0.0466661 0.0583793 0.0281245 0.0882266C0.00958281 0.118074 -0.00016456 0.152546 2.10193e-06 0.187683V1.9994C2.10193e-06 2.11425 0.0539084 2.2244 0.142971 2.29471L8.58045 8.883L0.142971 15.4713C0.0515646 15.5416 2.10193e-06 15.6517 2.10193e-06 15.7666V17.5783C2.10193e-06 17.7353 0.18047 17.8221 0.302345 17.726L10.8679 9.47362C10.9577 9.40357 11.0304 9.31397 11.0804 9.21162C11.1303 9.10928 11.1563 8.99689 11.1563 8.883C11.1563 8.7691 11.1303 8.65671 11.0804 8.55437C11.0304 8.45202 10.9577 8.36242 10.8679 8.29237Z" fill="currentColor"/></svg>';
+  var EXTERNAL_LINK = '<svg class="anticon anticon-export" xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 1024 1024" fill="currentColor"><path d="M880 112H632c-4.4 0-8 3.6-8 8v48c0 4.4 3.6 8 8 8h168v664H224V176h168c4.4 0 8-3.6 8-8v-48c0-4.4-3.6-8-8-8H144c-17.7 0-32 14.3-32 32v728c0 22.1 17.9 40 40 40h720c22.1 0 40-17.9 40-40V152c0-22.1-17.9-40-40-40z"/><path d="M564.3 264.3 430.6 398c-3.1 3.1-3.1 8.2 0 11.3l33.9 33.9c3.1 3.1 8.2 3.1 11.3 0l84.2-84.2V648c0 4.4 3.6 8 8 8h48c4.4 0 8-3.6 8-8V359l84.2 84.2c3.1 3.1 8.2 3.1 11.3 0l33.9-33.9c3.1-3.1 3.1-8.2 0-11.3L659.7 264.3a67.9 67.9 0 0 0-95.4 0z"/></svg>';
 
   var ICONS = {
-    statement: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="13" y2="17"/></svg>',
-    risk: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
-    market: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 17 9 11 13 15 21 7"/><polyline points="14 7 21 7 21 14"/></svg>',
-    kyc: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><circle cx="8" cy="12" r="2"/><line x1="14" y1="10" x2="19" y2="10"/><line x1="14" y1="14" x2="17" y2="14"/></svg>'
+    statement: '<svg class="anticon anticon-file-text" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"><path d="M16.125 7.3125V6.1875C16.125 6.08437 16.0406 6 15.9375 6H6.9375C6.83437 6 6.75 6.08437 6.75 6.1875V7.3125C6.75 7.41563 6.83437 7.5 6.9375 7.5H15.9375C16.0406 7.5 16.125 7.41563 16.125 7.3125ZM6.9375 9.375C6.83437 9.375 6.75 9.45937 6.75 9.5625V10.6875C6.75 10.7906 6.83437 10.875 6.9375 10.875H11.25C11.3531 10.875 11.4375 10.7906 11.4375 10.6875V9.5625C11.4375 9.45937 11.3531 9.375 11.25 9.375H6.9375ZM10.3125 19.9688H4.875V3.46875H18V11.5312C18 11.6344 18.0844 11.7188 18.1875 11.7188H19.5C19.6031 11.7188 19.6875 11.6344 19.6875 11.5312V2.53125C19.6875 2.11641 19.3523 1.78125 18.9375 1.78125H3.9375C3.52266 1.78125 3.1875 2.11641 3.1875 2.53125V20.9062C3.1875 21.3211 3.52266 21.6562 3.9375 21.6562H10.3125C10.4156 21.6562 10.5 21.5719 10.5 21.4688V20.1562C10.5 20.0531 10.4156 19.9688 10.3125 19.9688ZM20.7586 21.1758L18.5719 18.9891C19.0945 18.2977 19.4062 17.4352 19.4062 16.5C19.4062 14.2219 17.5594 12.375 15.2812 12.375C13.0031 12.375 11.1562 14.2219 11.1562 16.5C11.1562 18.7781 13.0031 20.625 15.2812 20.625C16.1203 20.625 16.8984 20.3742 17.55 19.9453L19.7695 22.1648C19.807 22.2023 19.8539 22.2188 19.9008 22.2188C19.9477 22.2188 19.9969 22.2 20.032 22.1648L20.7586 21.4383C20.7759 21.4211 20.7896 21.4006 20.799 21.3781C20.8083 21.3556 20.8132 21.3314 20.8132 21.307C20.8132 21.2826 20.8083 21.2585 20.799 21.236C20.7896 21.2134 20.7759 21.193 20.7586 21.1758ZM15.2812 19.125C13.8305 19.125 12.6562 17.9508 12.6562 16.5C12.6562 15.0492 13.8305 13.875 15.2812 13.875C16.732 13.875 17.9062 15.0492 17.9062 16.5C17.9062 17.9508 16.732 19.125 15.2812 19.125Z" fill="currentColor"/></svg>',
+    risk: '<svg class="anticon anticon-safety" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 22" fill="none"><path d="M16.9898 2.76328 9.02578.0492187C8.92969.0164062 8.80078 0 8.67188 0c-.12891 0-.25782.0164062-.35391.0492187L.353906 2.76328C.159375 2.82891 0 3.05391 0 3.26016V14.5664c0 .2063.133594.4781.295313.607L8.37422 21.4687c.08203.0633.1875.0961.29531.0961.10781 0 .21563-.0328.29531-.0961l8.07896-6.2953c.1617-.1265.2953-.3984.2953-.607V3.26016c.0047-.20625-.1547-.42891-.3492-.49688ZM15.6562 14.1164 8.67188 19.5586 1.6875 14.1164V4.09453l6.98438-2.38125 6.98434 2.38125v10.02187ZM6.14531 9.40547c-.07031-.0961-.18281-.15469-.30468-.15469H4.54688c-.15235 0-.24141.17344-.15235.29766l2.9625 4.07816c.03503.0479.08088.0869.13382.1138.05295.0269.11149.0409.17087.0409.05938 0 .11792-.014.17086-.0409.05295-.0269.0988-.0659.13383-.1138l4.98276-6.86019c.0891-.12422 0-.29766-.1523-.29766h-1.2938c-.1195 0-.2344.05859-.3047.15469l-3.53668 4.87026-1.51641-2.08829Z" fill="currentColor"/></svg>',
+    market: '<svg class="anticon anticon-fund" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 15" fill="none"><path d="m19.1959.00172-4.6688.5625c-.1547.01875-.2203.20859-.1101.31875l1.3898 1.38985-5.2969 5.29687L8.124 5.1861c-.14766-.14766-.38438-.14531-.52969 0L.05447 12.7283A.186.186 0 0 0 0 12.8607c0 .0496.01957.0972.05447.1324l1.05469 1.0594c.07266.0727.19218.0727.26484 0l6.48516-6.48281 2.38364 2.3836c.1476.1454.3843.1454.5296 0l6.361-6.35625 1.3898 1.38984c.0249.0248.0563.0421.0905.0499.0343.0078.07.0059.1033-.0056.0332-.0115.0625-.032.0846-.0594.0221-.0273.0361-.0603.0404-.0952l.5625-4.66875c.0164-.11953-.0868-.22266-.2086-.20625Z" fill="currentColor"/></svg>',
+    kyc: '<svg class="anticon anticon-idcard" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 17" fill="none"><path d="M20.25 0H.75C.33516 0 0 .33516 0 .75v15c0 .4148.33516.75.75.75h19.5c.4148 0 .75-.3352.75-.75V.75c0-.41484-.3352-.75-.75-.75Zm-.9375 14.8125H1.6875V1.6875h17.625v13.125Zm-6.5086-7.40625h2.8922c.0305 0 .0539-.08437.0539-.1875v-1.125c0-.10313-.0234-.1875-.0539-.1875h-2.8922c-.0305 0-.0539.08437-.0539.1875v1.125c0 .10313.0234.1875.0539.1875Zm.1125 3.375h4.3523c.0915 0 .1664-.0843.1664-.1874V9.46875c0-.10312-.0749-.1875-.1664-.1875h-4.3523c-.0914 0-.1664.08438-.1664.1875v1.125c0 .1031.075.1874.1664.1874ZM3.75 12.0234h1.0289c.0984 0 .1781-.0773.1852-.1757.0891-1.1836 1.0781-2.1211 2.2781-2.1211s2.1891.9375 2.2781 2.1211c.007.0984.0867.1757.1852.1757h1.0289c.0254.0001.0506-.0051.074-.0151.0233-.01.0444-.0246.062-.0431.0175-.0184.0311-.0402.04-.064.0088-.0238.0127-.0492.0115-.0746-.0657-1.2493-.75-2.3368-1.7484-2.9555.4403-.484.6836-1.1152.682-1.7695-.0016-1.4508-1.1711-2.625-2.6125-2.625-1.4414 0-2.6109 1.1742-2.6109 2.625 0 .682.2578 1.3008.682 1.7695-.5083.315-.9328.7483-1.2373 1.263-.3045.5146-.4799 1.0955-.5112 1.6925-.0094.1078.075.1968.1828.1968Zm3.4922-6.1406c.668 0 1.2117.5461 1.2117 1.2188 0 .6726-.5437 1.2187-1.2117 1.2187-.668 0-1.2117-.5461-1.2117-1.2187 0-.6727.5437-1.2188 1.2117-1.2188Z" fill="currentColor"/></svg>'
   };
 
   var THEME = {
@@ -1312,7 +1410,16 @@
     header.appendChild(chevron);
 
     var title = el("span", "product-accordion-title");
-    title.textContent = item.title;
+    var levelMatch = item.title.match(/^(.*?)(\s*\(nível\s+\d+\))$/i);
+    if (levelMatch) {
+      title.classList.add("product-accordion-title--with-level");
+      title.appendChild(document.createTextNode(levelMatch[1]));
+      var level = el("span", "product-accordion-title-level");
+      level.textContent = levelMatch[2];
+      title.appendChild(level);
+    } else {
+      title.textContent = item.title;
+    }
     header.appendChild(title);
 
     var chips = el("div", "data-product-chips");
@@ -1462,6 +1569,7 @@
       body.setAttribute("aria-hidden", expanded ? "true" : "false");
       section.classList.toggle("is-open", !expanded);
       chevron.innerHTML = expanded ? CHEVRON_RIGHT : CHEVRON_DOWN;
+      updateProductChipLayout();
 
       window.setTimeout(function () {
         section.dataset.animating = "false";
@@ -1476,6 +1584,48 @@
     root.appendChild(buildCategory(category));
   });
 
+  /* Empilha chips somente nas linhas em que título + chips não cabem lado a lado. */
+  var chipMeasureCanvas = document.createElement("canvas");
+  var chipMeasureContext = chipMeasureCanvas.getContext("2d");
+  var chipLayoutFrame = 0;
+
+  function updateProductChipLayout() {
+    window.cancelAnimationFrame(chipLayoutFrame);
+    chipLayoutFrame = window.requestAnimationFrame(function () {
+      var compact = window.matchMedia("(max-width: 680px)").matches;
+
+      document.querySelectorAll(".product-accordion-header").forEach(function (productHeader) {
+        productHeader.classList.remove("chips-stacked");
+        if (!compact) return;
+
+        var title = productHeader.querySelector(".product-accordion-title");
+        var chips = productHeader.querySelector(".data-product-chips");
+        var chevron = productHeader.querySelector(".chevron");
+        if (!title || !chips || !chevron) return;
+
+        var headerStyle = window.getComputedStyle(productHeader);
+        var titleStyle = window.getComputedStyle(title);
+        chipMeasureContext.font = titleStyle.font;
+
+        var horizontalPadding = parseFloat(headerStyle.paddingLeft) + parseFloat(headerStyle.paddingRight);
+        var availableWidth = productHeader.clientWidth - horizontalPadding - chevron.offsetWidth - 20;
+        var titleWidth = Math.ceil(chipMeasureContext.measureText(title.textContent).width) + 4;
+        var chipElements = Array.prototype.slice.call(chips.children);
+        var chipsWidth = chipElements.reduce(function (total, chip) {
+          return total + chip.offsetWidth;
+        }, 0) + Math.max(0, chipElements.length - 1) * 6;
+
+        productHeader.classList.toggle("chips-stacked", titleWidth + chipsWidth > availableWidth);
+      });
+    });
+  }
+
+  updateProductChipLayout();
+  window.addEventListener("resize", updateProductChipLayout);
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(updateProductChipLayout);
+  }
+
   /* ---------- avisa o Archbee da própria altura ----------
      Este HTML roda num <iframe> de origem diferente, então o Archbee não
      consegue medir a altura de dentro por conta própria (bloqueio de
@@ -1483,7 +1633,13 @@
      sempre que o tamanho mudar — inclusive quando um accordion abre/fecha,
      graças ao ResizeObserver. */
   function reportHeight() {
-    var height = document.body.scrollHeight;
+    var frame = document.querySelector(".catalog-frame");
+    var frameBottom = frame ? frame.getBoundingClientRect().bottom + 4 : 0;
+    var height = Math.ceil(Math.max(
+      frameBottom,
+      document.body.scrollHeight,
+      document.documentElement.scrollHeight
+    ));
     window.parent.postMessage({ type: "klavi-catalog-resize", height: height }, "*");
   }
 
