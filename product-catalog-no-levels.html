@@ -106,35 +106,33 @@
   }
 
   .catalog-category {
-  display: flex;
-  width: 100%;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 8px; /* era 36px */
-}
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+  }
 
   .category-header {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 10px;
-  align-self: stretch;
-  background: none;
-  border: 0;
-  padding: 14px 0; /* era 0 */
-  font: inherit;
-  color: inherit;
-  cursor: pointer;
-  text-align: left;
-  border-radius: 12px; /* era 10px */
-  position: relative; /* novo */
-}
- .category-header:hover { background: var(--hover-tint); } /* novo */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    align-self: stretch;
+    background: none;
+    border: 0;
+    padding: 0;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+    text-align: left;
+    border-radius: 10px;
+  }
 
-.category-header:focus-visible {
-  outline: 2px solid #0047BB;
-  outline-offset: 6px;
-}
+  .category-header:focus-visible {
+    outline: 2px solid #0047BB;
+    outline-offset: 6px;
+  }
 
   .category-header-top {
     display: flex;
@@ -152,14 +150,14 @@
   }
 
   .category-icon {
-  width: 30px;
-  height: 30px;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
 
   .category-icon svg { width: 16px; height: 16px; }
 
@@ -182,8 +180,8 @@
     font-variant-numeric: tabular-nums;
   }
 
-.category-header:hover .category-title { color: #0047BB; }
-.category-header:hover .chevron { color: var(--ink-soft); }
+  .category-header:hover .category-title { color: #0047BB; }
+  .category-header:hover .chevron { color: var(--ink-soft); }
 
   .category-description {
     align-self: stretch;
@@ -955,9 +953,11 @@
     top.appendChild(chevron);
 
     var iconBadge = el("span", "category-icon");
-iconBadge.style.background = "transparent"; /* era ICON_TINT (fundo azul claro) */
-iconBadge.style.border = "1px solid var(--border)"; /* novo */
-iconBadge.style.color = ICON_ACCENT;
+    iconBadge.style.background = ICON_TINT;
+    iconBadge.style.color = ICON_ACCENT;
+    iconBadge.innerHTML = ICONS[category.key] || ICONS.statement;
+    iconBadge.setAttribute("aria-hidden", "true");
+    top.appendChild(iconBadge);
 
     var title = el("span", "category-title");
     title.textContent = category.title;
