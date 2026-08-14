@@ -672,39 +672,12 @@
     border-bottom: 0;
     border-radius: 0;
     background-color: #FFFFFF;
-    background-image: linear-gradient(
-      to right,
-      transparent 63px,
-      var(--grid-line-soft) 63px,
-      var(--grid-line-soft) 64px,
-      transparent 64px,
-      transparent calc(100% - 64px),
-      var(--grid-line-soft) calc(100% - 64px),
-      var(--grid-line-soft) calc(100% - 63px),
-      transparent calc(100% - 63px)
-    );
+    background-image: none;
   }
 
   .grid-box::before,
   .grid-box::after {
-    content: "";
-    position: absolute;
-    z-index: 5;
-    top: 0;
-    bottom: 0;
-    width: 64px;
-    background: #FFFFFF;
-    pointer-events: none;
-  }
-
-  .grid-box::before {
-    left: 0;
-    border-right: 1px solid var(--grid-line-soft);
-  }
-
-  .grid-box::after {
-    right: 0;
-    border-left: 1px solid var(--grid-line-soft);
+    display: none;
   }
 
   .grid-box__art { filter: drop-shadow(0 8px 18px rgba(15, 23, 42, 0.12)); }
@@ -724,24 +697,14 @@
     border: 1px solid var(--grid-line);
     border-radius: 0;
     background-color: #FFFFFF;
-    background-image: linear-gradient(
-      to right,
-      transparent 63px,
-      var(--grid-line-soft) 63px,
-      var(--grid-line-soft) 64px,
-      transparent 64px,
-      transparent calc(100% - 64px),
-      var(--grid-line-soft) calc(100% - 64px),
-      var(--grid-line-soft) calc(100% - 63px),
-      transparent calc(100% - 63px)
-    );
+    background-image: none;
     box-shadow: none;
     overflow: hidden;
   }
 
   .catalog-intro {
     width: 100%;
-    padding: 36px 80px 30px;
+    padding: 36px 16px 30px;
     border-bottom: 1px solid var(--grid-line);
     background: rgba(255, 255, 255, 0.94);
   }
@@ -798,7 +761,7 @@
     height: 44px;
     min-height: 44px;
     justify-content: center;
-    padding: 0 80px;
+    padding: 0 16px;
     border-radius: 0;
   }
 
@@ -807,9 +770,9 @@
     position: absolute;
     z-index: 0;
     top: 0;
-    right: 64px;
+    right: 0;
     bottom: 0;
-    left: 64px;
+    left: 0;
     background: var(--grid-surface);
     opacity: 0;
     pointer-events: none;
@@ -869,7 +832,7 @@
     max-width: 100%;
     gap: 16px;
     padding-block: 0;
-    padding-inline: 80px;
+    padding-inline: 16px;
     opacity: 0;
     visibility: hidden;
     transform: none;
@@ -878,7 +841,7 @@
 
   .catalog-category.is-open .category-body-inner {
     padding-block: 0 24px;
-    padding-inline: 80px;
+    padding-inline: 16px;
     opacity: 1;
     visibility: visible;
     transform: none;
@@ -1019,17 +982,7 @@
   @media (max-width: 680px) {
     .product-catalog {
       border-radius: 0;
-      background-image: linear-gradient(
-        to right,
-        transparent 39px,
-        var(--grid-line-soft) 39px,
-        var(--grid-line-soft) 40px,
-        transparent 40px,
-        transparent calc(100% - 40px),
-        var(--grid-line-soft) calc(100% - 40px),
-        var(--grid-line-soft) calc(100% - 39px),
-        transparent calc(100% - 39px)
-      );
+      background-image: none;
     }
 
     .demo-wrap,
@@ -1038,31 +991,18 @@
     .grid-box {
       height: 320px;
       border-radius: 0;
-      background-image: linear-gradient(
-        to right,
-        transparent 39px,
-        var(--grid-line-soft) 39px,
-        var(--grid-line-soft) 40px,
-        transparent 40px,
-        transparent calc(100% - 40px),
-        var(--grid-line-soft) calc(100% - 40px),
-        var(--grid-line-soft) calc(100% - 39px),
-        transparent calc(100% - 39px)
-      );
+      background-image: none;
     }
-
-    .grid-box::before,
-    .grid-box::after { width: 40px; }
 
     .grid-box__art svg { width: 320px; }
 
-    .catalog-intro { padding: 28px 56px 24px; }
+    .catalog-intro { padding: 28px 16px 24px; }
     .catalog-categories { padding: 0; gap: 0; }
 
-    .category-header { padding-inline: 56px; }
-    .category-header::after { right: 40px; left: 40px; }
+    .category-header { padding-inline: 16px; }
+    .category-header::after { right: 0; left: 0; }
     .category-body-inner,
-    .catalog-category.is-open .category-body-inner { padding-inline: 56px; }
+    .catalog-category.is-open .category-body-inner { padding-inline: 16px; }
 
     .product-accordion-header {
       display: grid;
