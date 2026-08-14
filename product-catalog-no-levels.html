@@ -604,7 +604,6 @@
   ];
 
   var uid = 0;
-  var categoryControls = []; // {header, body, chevron} de cada categoria — usado pra fechar as outras ao abrir uma
   function nextId(prefix) { uid += 1; return prefix + "-" + uid; }
 
   /* ---------- tooltip: elemento único, fora de qualquer overflow:hidden ---------- */
@@ -831,25 +830,11 @@
 
     section.appendChild(body);
 
-    categoryControls.push({ header: header, body: body, chevron: chevron });
-
     header.addEventListener("click", function () {
       var expanded = header.getAttribute("aria-expanded") === "true";
-      var willOpen = !expanded;
-
-      if (willOpen) {
-        categoryControls.forEach(function (ctrl) {
-          if (ctrl.header !== header) {
-            ctrl.header.setAttribute("aria-expanded", "false");
-            ctrl.body.hidden = true;
-            ctrl.chevron.innerHTML = CHEVRON_RIGHT;
-          }
-        });
-      }
-
-      header.setAttribute("aria-expanded", willOpen ? "true" : "false");
-      body.hidden = !willOpen;
-      chevron.innerHTML = willOpen ? CHEVRON_DOWN : CHEVRON_RIGHT;
+      header.setAttribute("aria-expanded", expanded ? "false" : "true");
+      body.hidden = expanded;
+      chevron.innerHTML = expanded ? CHEVRON_RIGHT : CHEVRON_DOWN;
     });
 
     return section;
