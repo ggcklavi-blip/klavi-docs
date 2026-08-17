@@ -861,21 +861,24 @@
   }
 
   .category-overview-card-cta {
-    display: inline-flex;
-    width: max-content;
-    height: 28px;
+    display: flex;
+    width: calc(100% + 32px);
+    height: 38px;
     max-height: 0;
     align-items: center;
-    gap: 6px;
+    justify-content: center;
+    gap: 8px;
     margin-top: 0;
-    padding: 0 10px;
-    border: 1px solid #D8DEE8;
-    border-radius: 6px;
+    margin-inline: -16px;
+    padding: 0 16px;
+    border: 0;
+    border-top: 1px solid transparent;
+    border-radius: 0;
     background: #FFFFFF;
     overflow: hidden;
-    color: var(--ink-soft);
-    font-size: 12px;
-    font-weight: 500;
+    color: #0047BB;
+    font-size: 13px;
+    font-weight: 600;
     line-height: 1.4;
     white-space: nowrap;
     opacity: 0;
@@ -883,6 +886,10 @@
     transition:
       max-height 0.18s cubic-bezier(0.2, 0.8, 0.2, 1),
       margin-top 0.18s cubic-bezier(0.2, 0.8, 0.2, 1),
+      margin-bottom 0.18s cubic-bezier(0.2, 0.8, 0.2, 1),
+      background-color 0.14s ease,
+      border-color 0.14s ease,
+      color 0.14s ease,
       opacity 0.12s ease,
       transform 0.18s cubic-bezier(0.2, 0.8, 0.2, 1);
   }
@@ -895,10 +902,19 @@
 
   .category-overview-card:hover .category-overview-card-cta,
   .category-overview-card:focus-visible .category-overview-card-cta {
-    max-height: 28px;
-    margin-top: 10px;
+    max-height: 38px;
+    margin-top: 16px;
+    margin-bottom: -18px;
+    border-top-color: var(--grid-line);
     opacity: 1;
     transform: translateY(0);
+  }
+
+  .category-overview-card:hover .category-overview-card-cta:hover,
+  .category-overview-card:focus-visible .category-overview-card-cta:hover {
+    border-top-color: #0047BB;
+    background: #0047BB;
+    color: #FFFFFF;
   }
 
   .catalog-eyebrow {
@@ -1049,8 +1065,11 @@
   }
 
   .category-description {
+    width: calc(100% + 32px);
     max-width: none;
+    margin-inline: -16px;
     padding: 18px 0 0;
+    padding-inline: 16px;
     border-top: 1px solid var(--grid-line-soft);
     color: var(--muted);
     font-size: 13px;
@@ -1246,8 +1265,10 @@
 
   @media (hover: none) {
     .category-overview-card-cta {
-      max-height: 28px;
-      margin-top: 10px;
+      max-height: 38px;
+      margin-top: 16px;
+      margin-bottom: -18px;
+      border-top-color: var(--grid-line);
       opacity: 1;
       transform: none;
     }
