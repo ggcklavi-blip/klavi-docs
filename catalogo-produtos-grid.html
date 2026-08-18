@@ -10,6 +10,18 @@
 <style>
   *, *::before, *::after { box-sizing: border-box; }
 
+  .visually-hidden {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+  }
+
   :root {
     --ink: #0F172A;
     --ink-soft: #425168;
@@ -709,6 +721,115 @@
     background: rgba(255, 255, 255, 0.94);
   }
 
+  .product-guide {
+    width: 100%;
+    padding: 36px 16px;
+    border-bottom: 1px solid var(--grid-line);
+    background: #FFFFFF;
+  }
+
+  .product-guide-title {
+    margin: 0;
+    color: var(--ink);
+    font-size: clamp(24px, 3.5vw, 32px);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+  }
+
+  .product-guide-description {
+    max-width: 650px;
+    margin: 12px 0 20px;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.65;
+  }
+
+  .product-guide-list {
+    width: 100%;
+    border-top: 1px solid var(--grid-line);
+    border-left: 1px solid var(--grid-line);
+    border-right: 1px solid var(--grid-line);
+  }
+
+  .product-guide-item {
+    position: relative;
+    display: block;
+    width: 100%;
+    min-width: 0;
+    padding: 15px 46px 15px 16px;
+    border: 0;
+    border-bottom: 1px solid var(--grid-line);
+    border-radius: 0;
+    background: #FFFFFF;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 0.14s ease;
+  }
+
+  .product-guide-item:hover { background: var(--grid-surface); }
+
+  .product-guide-item:focus-visible {
+    z-index: 1;
+    outline: 2px solid #0047BB;
+    outline-offset: -2px;
+  }
+
+  .product-guide-question {
+    display: block;
+    margin-bottom: 6px;
+    color: #0047BB;
+    font-size: 13.5px;
+    font-weight: 600;
+    line-height: 1.45;
+  }
+
+  .product-guide-answer {
+    display: block;
+    min-width: 0;
+    color: var(--muted);
+    font-size: 12.5px;
+    line-height: 1.6;
+  }
+
+  .product-guide-code {
+    display: inline;
+    padding: 2px 6px;
+    border: 1px solid var(--grid-line-soft);
+    border-radius: 3px;
+    background: #F7F8FA;
+    color: #526074;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    font-size: 10.5px;
+    line-height: 1.8;
+    overflow-wrap: anywhere;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+  }
+
+  .product-guide-arrow {
+    position: absolute;
+    top: 50%;
+    right: 16px;
+    display: flex;
+    width: 18px;
+    height: 18px;
+    align-items: center;
+    justify-content: center;
+    color: var(--faint);
+    transform: translateY(-50%);
+    transition: color 0.14s ease, transform 0.14s ease;
+  }
+
+  .product-guide-arrow svg { display: block; width: 12px; height: 12px; }
+
+  .product-guide-item:hover .product-guide-arrow {
+    color: #0047BB;
+    transform: translate(2px, -50%);
+  }
+
   .category-overview {
     width: 100%;
     padding: 36px 16px;
@@ -896,8 +1017,8 @@
 
   .category-overview-card-cta svg {
     display: block;
-    width: 13px;
-    height: 13px;
+    width: 11px;
+    height: 11px;
   }
 
   .category-overview-card:hover .category-overview-card-cta,
@@ -938,6 +1059,141 @@
     font-size: 14px;
     line-height: 1.65;
   }
+
+  .catalog-search {
+    position: relative;
+    width: 100%;
+    margin-top: 18px;
+  }
+
+  .catalog-search-icon {
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    left: 13px;
+    display: flex;
+    width: 16px;
+    height: 16px;
+    align-items: center;
+    justify-content: center;
+    color: var(--faint);
+    pointer-events: none;
+    transform: translateY(-50%);
+    transition: color 0.14s ease;
+  }
+
+  .catalog-search-icon svg {
+    display: block;
+    width: 16px;
+    height: 16px;
+  }
+
+  .catalog-search-input {
+    display: block;
+    width: 100%;
+    height: 40px;
+    padding: 0 48px 0 38px;
+    border: 1px solid var(--grid-line);
+    border-radius: 1px;
+    outline: 0;
+    background: #FFFFFF;
+    color: var(--ink);
+    font: inherit;
+    font-size: 13px;
+    transition: border-color 0.14s ease, box-shadow 0.14s ease;
+  }
+
+  .catalog-search-input::placeholder { color: var(--faint); }
+
+  .catalog-search-input:hover { border-color: #B8C4D4; }
+
+  .catalog-search-input:focus {
+    border-color: #0047BB;
+    box-shadow: 0 0 0 2px rgba(0, 71, 187, 0.12);
+  }
+
+  .catalog-search:focus-within .catalog-search-icon { color: #0047BB; }
+
+  .catalog-search-input::-webkit-search-cancel-button {
+    appearance: none;
+    -webkit-appearance: none;
+  }
+
+  .catalog-search-reset {
+    position: absolute;
+    z-index: 2;
+    top: 50%;
+    right: 8px;
+    display: flex;
+    width: 32px;
+    height: 32px;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: 0;
+    border-radius: 5px;
+    background: transparent;
+    color: var(--faint);
+    cursor: pointer;
+    transform: translateY(-50%);
+    transition: background-color 0.14s ease, color 0.14s ease;
+  }
+
+  .catalog-search-reset:hover {
+    background: var(--grid-surface);
+    color: var(--ink-soft);
+  }
+
+  .catalog-search-reset:focus-visible {
+    outline: 2px solid #0047BB;
+    outline-offset: -2px;
+  }
+
+  .catalog-search-reset[hidden] { display: none; }
+
+  .catalog-search-reset svg {
+    display: block;
+    width: 14px;
+    height: 14px;
+  }
+
+  .catalog-search-empty {
+    display: flex;
+    min-height: 132px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 24px 16px;
+    border-bottom: 1px solid var(--grid-line);
+    color: var(--muted);
+    text-align: center;
+  }
+
+  .catalog-search-empty strong {
+    color: var(--ink);
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .catalog-search-empty span { font-size: 12.5px; }
+
+  .catalog-search-empty button {
+    margin-top: 6px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #0047BB;
+    font: inherit;
+    font-size: 12.5px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .catalog-search-empty[hidden],
+  .catalog-category[hidden],
+  .intermediate-group[hidden],
+  .product-accordion[hidden] { display: none; }
 
   .catalog-categories {
     width: 100%;
@@ -1216,6 +1472,7 @@
     .grid-box__art svg { width: 320px; }
 
     .category-overview { padding: 28px 16px; }
+    .product-guide { padding: 28px 16px; }
     .catalog-intro { padding: 28px 16px 24px; }
     .catalog-categories { padding: 0; gap: 0; }
 
@@ -1388,7 +1645,7 @@
           </div>
           <div class="category-overview-card-body">
             <p class="category-overview-card-description">Dados financeiros brutos e enriquecidos de contas, cartões, empréstimos, financiamentos, cheque especial e produtos de investimento.</p>
-            <span class="category-overview-card-cta">Ver no catálogo <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 3V12M8 12L11.5 8.5M8 12L4.5 8.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span class="category-overview-card-cta">Ver no catálogo <svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M11.0621 4.89531H9.79647C9.72459 4.89531 9.65584 4.92656 9.6074 4.98125L6.18709 8.92344V0.125C6.18709 0.05625 6.13084 0 6.06209 0H5.12459C5.05584 0 4.99959 0.05625 4.99959 0.125V8.92344L1.57928 4.98125C1.5324 4.92656 1.46365 4.89531 1.39022 4.89531H0.124592C0.0183417 4.89531 -0.0394708 5.02188 0.0308417 5.10156L5.21678 11.0781C5.26366 11.1322 5.32161 11.1756 5.38672 11.2053C5.45182 11.235 5.52255 11.2504 5.59412 11.2504C5.66569 11.2504 5.73643 11.235 5.80153 11.2053C5.86663 11.1756 5.92459 11.1322 5.97147 11.0781L11.1558 5.10156C11.2262 5.02031 11.1683 4.89531 11.0621 4.89531Z" fill="currentColor"/></svg></span>
           </div>
         </a>
 
@@ -1407,7 +1664,7 @@
           </div>
           <div class="category-overview-card-body">
             <p class="category-overview-card-description">Variáveis derivadas e modelos de renda, despesas, capacidade financeira, risco de crédito, scores e concorrência de débitos.</p>
-            <span class="category-overview-card-cta">Ver no catálogo <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 3V12M8 12L11.5 8.5M8 12L4.5 8.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span class="category-overview-card-cta">Ver no catálogo <svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M11.0621 4.89531H9.79647C9.72459 4.89531 9.65584 4.92656 9.6074 4.98125L6.18709 8.92344V0.125C6.18709 0.05625 6.13084 0 6.06209 0H5.12459C5.05584 0 4.99959 0.05625 4.99959 0.125V8.92344L1.57928 4.98125C1.5324 4.92656 1.46365 4.89531 1.39022 4.89531H0.124592C0.0183417 4.89531 -0.0394708 5.02188 0.0308417 5.10156L5.21678 11.0781C5.26366 11.1322 5.32161 11.1756 5.38672 11.2053C5.45182 11.235 5.52255 11.2504 5.59412 11.2504C5.66569 11.2504 5.73643 11.235 5.80153 11.2053C5.86663 11.1756 5.92459 11.1322 5.97147 11.0781L11.1558 5.10156C11.2262 5.02031 11.1683 4.89531 11.0621 4.89531Z" fill="currentColor"/></svg></span>
           </div>
         </a>
 
@@ -1426,7 +1683,7 @@
           </div>
           <div class="category-overview-card-body">
             <p class="category-overview-card-description">Variáveis que ajudam a identificar a posse de produtos, padrões de comportamento, sinais de estilo de vida e principalidade bancária.</p>
-            <span class="category-overview-card-cta">Ver no catálogo <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 3V12M8 12L11.5 8.5M8 12L4.5 8.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span class="category-overview-card-cta">Ver no catálogo <svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M11.0621 4.89531H9.79647C9.72459 4.89531 9.65584 4.92656 9.6074 4.98125L6.18709 8.92344V0.125C6.18709 0.05625 6.13084 0 6.06209 0H5.12459C5.05584 0 4.99959 0.05625 4.99959 0.125V8.92344L1.57928 4.98125C1.5324 4.92656 1.46365 4.89531 1.39022 4.89531H0.124592C0.0183417 4.89531 -0.0394708 5.02188 0.0308417 5.10156L5.21678 11.0781C5.26366 11.1322 5.32161 11.1756 5.38672 11.2053C5.45182 11.235 5.52255 11.2504 5.59412 11.2504C5.66569 11.2504 5.73643 11.235 5.80153 11.2053C5.86663 11.1756 5.92459 11.1322 5.97147 11.0781L11.1558 5.10156C11.2262 5.02031 11.1683 4.89531 11.0621 4.89531Z" fill="currentColor"/></svg></span>
           </div>
         </a>
 
@@ -1445,18 +1702,42 @@
           </div>
           <div class="category-overview-card-body">
             <p class="category-overview-card-description">Dados cadastrais e de identidade de pessoas físicas e jurídicas, incluindo informações declaradas disponíveis via Open Finance.</p>
-            <span class="category-overview-card-cta">Ver no catálogo <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 3V12M8 12L11.5 8.5M8 12L4.5 8.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span class="category-overview-card-cta">Ver no catálogo <svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M11.0621 4.89531H9.79647C9.72459 4.89531 9.65584 4.92656 9.6074 4.98125L6.18709 8.92344V0.125C6.18709 0.05625 6.13084 0 6.06209 0H5.12459C5.05584 0 4.99959 0.05625 4.99959 0.125V8.92344L1.57928 4.98125C1.5324 4.92656 1.46365 4.89531 1.39022 4.89531H0.124592C0.0183417 4.89531 -0.0394708 5.02188 0.0308417 5.10156L5.21678 11.0781C5.26366 11.1322 5.32161 11.1756 5.38672 11.2053C5.45182 11.235 5.52255 11.2504 5.59412 11.2504C5.66569 11.2504 5.73643 11.235 5.80153 11.2053C5.86663 11.1756 5.92459 11.1322 5.97147 11.0781L11.1558 5.10156C11.2262 5.02031 11.1683 4.89531 11.0621 4.89531Z" fill="currentColor"/></svg></span>
           </div>
         </a>
+      </div>
+    </section>
+
+    <section class="product-guide" aria-labelledby="product-guide-title">
+      <h2 class="product-guide-title" id="product-guide-title">Como escolher um produto</h2>
+      <p class="product-guide-description">Comece pela sua necessidade de negócio para encontrar a categoria, o produto e o nível de agregação mais adequados.</p>
+      <div class="product-guide-list">
+        <button class="product-guide-item" type="button" data-guide-category="statement"><span class="product-guide-question">Precisa de dados financeiros brutos?</span><span class="product-guide-answer">Use produtos de Statement para contas, cartões, empréstimos, financiamentos e investimentos.</span><span class="product-guide-arrow" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6H9.5M6.5 3L9.5 6L6.5 9" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+        <button class="product-guide-item" type="button" data-guide-query="categorizad"><span class="product-guide-question">Precisa de transações categorizadas?</span><span class="product-guide-answer">Use produtos categorizados nos níveis 2 ou 3, conforme a granularidade necessária.</span><span class="product-guide-arrow" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6H9.5M6.5 3L9.5 6L6.5 9" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+        <button class="product-guide-item" type="button" data-guide-query="renda"><span class="product-guide-question">Precisa de sinais de renda ou capacidade financeira?</span><span class="product-guide-answer">Use <span class="product-guide-code">pf_income</span>, <span class="product-guide-code">pf_financial_entries</span>, <span class="product-guide-code">pf_recurrent_expenses</span> ou <span class="product-guide-code">pf_financial_capacity</span>.</span><span class="product-guide-arrow" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6H9.5M6.5 3L9.5 6L6.5 9" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+        <button class="product-guide-item" type="button" data-guide-query="risco de credito"><span class="product-guide-question">Precisa de um modelo de risco de crédito?</span><span class="product-guide-answer">Use produtos de score ou <span class="product-guide-code">pf_credit_risk</span>, dependendo do resultado esperado.</span><span class="product-guide-arrow" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6H9.5M6.5 3L9.5 6L6.5 9" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+        <button class="product-guide-item" type="button" data-guide-category="market"><span class="product-guide-question">Precisa entender comportamento ou posse de produtos?</span><span class="product-guide-answer">Use <span class="product-guide-code">pf_financial_products</span>, <span class="product-guide-code">pf_non_financial_products</span> ou <span class="product-guide-code">pf_principality</span>.</span><span class="product-guide-arrow" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6H9.5M6.5 3L9.5 6L6.5 9" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+        <button class="product-guide-item" type="button" data-guide-category="kyc"><span class="product-guide-question">Precisa de dados de identidade?</span><span class="product-guide-answer">Use <span class="product-guide-code">pf_identity</span> ou <span class="product-guide-code">pj_identity</span>, conforme o tipo de conta.</span><span class="product-guide-arrow" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6H9.5M6.5 3L9.5 6L6.5 9" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
       </div>
     </section>
 
     <div class="catalog-intro">
       <h2 class="catalog-title">Catálogo</h2>
       <p class="catalog-description">Este catálogo resume os produtos disponíveis, o tipo de conta, o nível de agregação e o resultado esperado.</p>
+      <div class="catalog-search" role="search">
+        <label class="visually-hidden" for="catalog-search-input">Buscar no catálogo</label>
+        <span class="catalog-search-icon" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="4.75" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+        <input class="catalog-search-input" id="catalog-search-input" type="search" placeholder="Buscar no catálogo" autocomplete="off" spellcheck="false">
+        <button class="catalog-search-reset" id="catalog-search-reset" type="button" aria-label="Limpar busca" hidden><svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3.5 3.5L10.5 10.5M10.5 3.5L3.5 10.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+      </div>
     </div>
 
     <div class="catalog-categories" id="catalog-categories"></div>
+    <div class="catalog-search-empty" id="catalog-search-empty" hidden aria-live="polite">
+      <strong>Nenhum resultado encontrado</strong>
+      <span>Tente buscar por outro termo.</span>
+      <button type="button" id="catalog-search-clear">Limpar busca</button>
+    </div>
 
   </section>
 </div>
@@ -1857,6 +2138,126 @@
   var root = document.getElementById("catalog-categories");
   DATA.forEach(function (category) {
     root.appendChild(buildCategory(category));
+  });
+
+  var searchInput = document.getElementById("catalog-search-input");
+  var searchReset = document.getElementById("catalog-search-reset");
+  var searchEmpty = document.getElementById("catalog-search-empty");
+  var searchClear = document.getElementById("catalog-search-clear");
+
+  function normalizeSearchText(value) {
+    return String(value || "")
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase()
+      .trim();
+  }
+
+  function collapseAllCatalogAccordions() {
+    root.querySelectorAll(".catalog-category").forEach(function (section) {
+      var categoryHeader = section.querySelector(".category-header");
+      var categoryBody = section.querySelector(".category-body");
+      var categoryChevron = categoryHeader ? categoryHeader.querySelector(".chevron") : null;
+
+      section.classList.remove("is-open");
+      delete section.dataset.animating;
+
+      if (categoryHeader) { categoryHeader.setAttribute("aria-expanded", "false"); }
+      if (categoryBody) { categoryBody.setAttribute("aria-hidden", "true"); }
+      if (categoryChevron) { categoryChevron.innerHTML = CHEVRON_RIGHT; }
+
+      section.querySelectorAll(".product-accordion").forEach(function (accordion) {
+        var productHeader = accordion.querySelector(".product-accordion-header");
+        var productContent = accordion.querySelector(".product-accordion-content");
+        var productChevron = productHeader ? productHeader.querySelector(".chevron") : null;
+
+        if (productHeader) { productHeader.setAttribute("aria-expanded", "false"); }
+        if (productContent) { productContent.hidden = true; }
+        if (productChevron) { productChevron.innerHTML = CHEVRON_RIGHT; }
+      });
+    });
+  }
+
+  function filterCatalog() {
+    var query = normalizeSearchText(searchInput.value);
+    var visibleCategories = 0;
+
+    if (!query) { collapseAllCatalogAccordions(); }
+
+    root.querySelectorAll(".catalog-category").forEach(function (section) {
+      var title = section.querySelector(".category-title");
+      var description = section.querySelector(".category-description");
+      var categoryTitleMatches = query && normalizeSearchText(title ? title.textContent : "").indexOf(query) !== -1;
+      var categoryDescriptionMatches = query && normalizeSearchText(description ? description.textContent : "").indexOf(query) !== -1;
+      var accordions = Array.prototype.slice.call(section.querySelectorAll(".product-accordion"));
+      var matchingAccordions = query ? accordions.filter(function (accordion) {
+        return normalizeSearchText(accordion.textContent).indexOf(query) !== -1;
+      }) : accordions;
+      var showAllAccordions = !query || categoryTitleMatches;
+
+      accordions.forEach(function (accordion) {
+        accordion.hidden = !showAllAccordions && matchingAccordions.indexOf(accordion) === -1;
+      });
+
+      section.querySelectorAll(".intermediate-group").forEach(function (group) {
+        var groupHasVisibleAccordion = Array.prototype.some.call(
+          group.querySelectorAll(".product-accordion"),
+          function (accordion) { return !accordion.hidden; }
+        );
+        group.hidden = Boolean(query) && !groupHasVisibleAccordion;
+      });
+
+      var sectionMatches = !query || categoryTitleMatches || categoryDescriptionMatches || matchingAccordions.length > 0;
+      section.hidden = !sectionMatches;
+
+      if (sectionMatches) {
+        visibleCategories += 1;
+        if (query) {
+          var header = section.querySelector(".category-header");
+          if (header && header.getAttribute("aria-expanded") !== "true") {
+            header.click();
+          }
+        }
+      }
+    });
+
+    searchEmpty.hidden = !query || visibleCategories > 0;
+    updateProductChipLayout();
+  }
+
+  searchInput.addEventListener("input", function () {
+    searchReset.hidden = !searchInput.value;
+    filterCatalog();
+  });
+  searchReset.addEventListener("click", function () {
+    searchInput.value = "";
+    searchReset.hidden = true;
+    filterCatalog();
+    searchInput.focus();
+  });
+  searchClear.addEventListener("click", function () {
+    searchInput.value = "";
+    searchReset.hidden = true;
+    filterCatalog();
+    searchInput.focus();
+  });
+
+  document.querySelectorAll(".product-guide-item").forEach(function (item) {
+    item.addEventListener("click", function () {
+      var query = item.getAttribute("data-guide-query");
+      var categoryKey = item.getAttribute("data-guide-category");
+
+      if (query) {
+        searchInput.value = query;
+        searchReset.hidden = false;
+        filterCatalog();
+        searchInput.scrollIntoView({ behavior: "smooth", block: "center" });
+        return;
+      }
+
+      var categoryCard = document.querySelector('[data-category-target="' + categoryKey + '"]');
+      if (categoryCard) { categoryCard.click(); }
+    });
   });
 
   document.querySelectorAll("[data-category-target]").forEach(function (card) {
