@@ -698,40 +698,7 @@
   }
 
   .grid-box::before,
-  .grid-box::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    display: block;
-    padding: 1px;
-    pointer-events: none;
-    background: conic-gradient(
-      from var(--hero-beam-angle),
-      transparent 0deg,
-      transparent 286deg,
-      rgba(0, 71, 187, 0.08) 306deg,
-      rgba(0, 71, 187, 0.52) 334deg,
-      rgba(75, 171, 255, 0.78) 344deg,
-      rgba(0, 71, 187, 0.18) 354deg,
-      transparent 360deg
-    );
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    mask-composite: exclude;
-    animation: hero-border-beam 12s linear infinite;
-  }
-
-  .grid-box::before {
-    z-index: 19;
-    padding: 2px;
-    filter: blur(5px);
-    opacity: 0.28;
-  }
-
-  .grid-box::after {
-    z-index: 20;
-  }
+  .grid-box::after { display: none; }
 
   .grid-box__art { filter: drop-shadow(0 8px 18px rgba(15, 23, 42, 0.12)); }
 
@@ -1668,12 +1635,6 @@
       transform: none;
     }
 
-    .grid-box::before,
-    .grid-box::after {
-      --hero-beam-angle: 40deg;
-      animation: none;
-    }
-
     .category-overview-card::before,
     .category-overview-card::after {
       --hero-beam-angle: 40deg;
@@ -2571,7 +2532,8 @@
 
       for (var ribbon = 0; ribbon < options.count; ribbon += 1) {
         var progress = options.count === 1 ? 0 : ribbon / (options.count - 1);
-        var baseY = height * 0.14 + progress * height * 0.72 + options.offset;
+        var baseY = height * 0.26 + progress * height * 0.72 + options.offset;
+        var horizontalOffset = width * 0.18;
         context.beginPath();
 
         for (var x = 0; x <= width + options.step; x += options.step) {
@@ -2584,8 +2546,8 @@
           var pointerWave = Math.sin(x * 0.018 + time * 1.8) * pointerFactor * 12 * envelope;
           var y = baseY + wave + secondaryWave + variation + pointerWave + (pointer.y - height * 0.5) * progress * 0.025;
 
-          if (x === 0) context.moveTo(x, y);
-          else context.lineTo(x, y);
+          if (x === 0) context.moveTo(x + horizontalOffset, y);
+          else context.lineTo(x + horizontalOffset, y);
         }
 
         context.globalAlpha = (1 - progress * 0.48) * (options.primary ? 0.36 : 0.16);
