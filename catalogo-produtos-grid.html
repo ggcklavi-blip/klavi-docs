@@ -626,11 +626,11 @@
   .hero-grid-cell {
     transform-box: fill-box;
     transform-origin: center;
+    will-change: fill, opacity, transform;
     transition:
-      fill 0.22s ease,
-      opacity 0.22s ease,
-      filter 0.22s ease,
-      transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1);
+      fill 0.78s cubic-bezier(0.16, 1, 0.3, 1),
+      opacity 0.78s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.86s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .hero-grid-cell.is-near {
@@ -639,10 +639,9 @@
   }
 
   .hero-grid-cell.is-active {
-    fill: rgba(0, 71, 187, 0.23);
+    fill: rgba(0, 71, 187, 0.20);
     opacity: 1;
-    filter: drop-shadow(0 0 7px rgba(0, 71, 187, 0.25));
-    transform: scale(0.9);
+    transform: scale(0.94);
   }
 
   /* Variante 2: máscara linear (canto superior esquerdo pro inferior direito) */
@@ -660,7 +659,23 @@
   .grid-box__art {
     position: relative;
     z-index: 10;
-    filter: drop-shadow(0 12px 28px rgba(15, 23, 42, 0.18));
+    transform: translate(var(--drag-x, 0px), var(--drag-y, 0px));
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  .grid-box__drag-handle {
+    position: absolute;
+    z-index: 2;
+    inset: 0 0 auto;
+    height: 34px;
+    cursor: grab;
+    touch-action: none;
+  }
+
+  .grid-box__drag-handle:active,
+  .grid-box__art.is-dragging .grid-box__drag-handle {
+    cursor: grabbing;
   }
 
   .grid-box__art svg {
@@ -668,6 +683,7 @@
     width: 380px;
     height: auto;
     border-radius: 10px;
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.18);
   }
 
   /* ---------- variação editorial em grid ---------- */
@@ -722,7 +738,7 @@
   .grid-box::before,
   .grid-box::after { display: none; }
 
-  .grid-box__art { filter: drop-shadow(0 8px 18px rgba(15, 23, 42, 0.12)); }
+  .grid-box__art svg { box-shadow: 0 8px 18px rgba(15, 23, 42, 0.12); }
 
   .preview {
     width: 100%;
@@ -1696,6 +1712,7 @@
         </svg>
       </svg>
     <div class="grid-box__art">
+<div class="grid-box__drag-handle" aria-label="Arraste para mover a janela" role="button"></div>
 <svg width="363" height="226" viewBox="0 0 363 226" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g clip-path="url(#clip0_85_285)">
 <mask id="path-2-inside-1_85_285" fill="white">
@@ -2569,6 +2586,70 @@
       hoverFrame = 0;
       clearGridHover();
     });
+  })();
+
+  /* Janela de código arrastável, sempre contida dentro da hero. */
+  (function initHeroWindowDrag() {
+    var hero = document.querySelector(".grid-box");
+    var windowArt = hero && hero.querySelector(".grid-box__art");
+    var handle = windowArt && windowArt.querySelector(".grid-box__drag-handle");
+    if (!hero || !windowArt || !handle) return;
+
+    var offsetX = 0;
+    var offsetY = 0;
+    var startPointerX = 0;
+    var startPointerY = 0;
+    var startOffsetX = 0;
+    var startOffsetY = 0;
+    var activePointerId = null;
+
+    function clamp(value, min, max) {
+      return Math.min(Math.max(value, min), max);
+    }
+
+    function getLimits() {
+      return {
+        x: Math.max(0, Math.floor((hero.clientWidth - windowArt.offsetWidth) * 0.5)),
+        y: Math.max(0, Math.floor((hero.clientHeight - windowArt.offsetHeight) * 0.5))
+      };
+    }
+
+    function applyPosition() {
+      var limits = getLimits();
+      offsetX = clamp(Math.round(offsetX), -limits.x, limits.x);
+      offsetY = clamp(Math.round(offsetY), -limits.y, limits.y);
+      windowArt.style.setProperty("--drag-x", offsetX + "px");
+      windowArt.style.setProperty("--drag-y", offsetY + "px");
+    }
+
+    handle.addEventListener("pointerdown", function (event) {
+      if (event.button !== undefined && event.button !== 0) return;
+      activePointerId = event.pointerId;
+      startPointerX = event.clientX;
+      startPointerY = event.clientY;
+      startOffsetX = offsetX;
+      startOffsetY = offsetY;
+      windowArt.classList.add("is-dragging");
+      handle.setPointerCapture(event.pointerId);
+      event.preventDefault();
+    });
+
+    handle.addEventListener("pointermove", function (event) {
+      if (event.pointerId !== activePointerId) return;
+      offsetX = startOffsetX + event.clientX - startPointerX;
+      offsetY = startOffsetY + event.clientY - startPointerY;
+      applyPosition();
+    });
+
+    function finishDrag(event) {
+      if (event.pointerId !== activePointerId) return;
+      activePointerId = null;
+      windowArt.classList.remove("is-dragging");
+    }
+
+    handle.addEventListener("pointerup", finishDrag);
+    handle.addEventListener("pointercancel", finishDrag);
+    window.addEventListener("resize", applyPosition);
   })();
 
   /* Aether Ribbon Mesh adaptado para o fundo da introdução do catálogo. */
