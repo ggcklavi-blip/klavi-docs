@@ -39,6 +39,16 @@
     --mono: 'JetBrains Mono', Menlo, monospace;
   }
 
+  @property --hero-beam-angle {
+    syntax: "<angle>";
+    inherits: false;
+    initial-value: 0deg;
+  }
+
+  @keyframes hero-border-beam {
+    to { --hero-beam-angle: 360deg; }
+  }
+
   body {
     display: flow-root;
     margin: 0;
@@ -689,7 +699,38 @@
 
   .grid-box::before,
   .grid-box::after {
-    display: none;
+    content: "";
+    position: absolute;
+    inset: 0;
+    display: block;
+    padding: 1px;
+    pointer-events: none;
+    background: conic-gradient(
+      from var(--hero-beam-angle),
+      transparent 0deg,
+      transparent 286deg,
+      rgba(0, 71, 187, 0.08) 306deg,
+      rgba(0, 71, 187, 0.52) 334deg,
+      rgba(75, 171, 255, 0.78) 344deg,
+      rgba(0, 71, 187, 0.18) 354deg,
+      transparent 360deg
+    );
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    animation: hero-border-beam 12s linear infinite;
+  }
+
+  .grid-box::before {
+    z-index: 19;
+    padding: 2px;
+    filter: blur(5px);
+    opacity: 0.28;
+  }
+
+  .grid-box::after {
+    z-index: 20;
   }
 
   .grid-box__art { filter: drop-shadow(0 8px 18px rgba(15, 23, 42, 0.12)); }
@@ -715,20 +756,46 @@
   }
 
   .catalog-intro {
+    position: relative;
     width: 100%;
     padding: 36px 16px 30px;
     border-bottom: 1px solid var(--grid-line);
     background: rgba(255, 255, 255, 0.94);
+    isolation: isolate;
+    overflow: hidden;
   }
 
   .product-guide {
+    position: relative;
     width: 100%;
     padding: 36px 16px;
     border-bottom: 1px solid var(--grid-line);
     background: #FFFFFF;
+    isolation: isolate;
+    overflow: hidden;
+  }
+
+  .catalog-intro-mesh {
+    position: absolute;
+    z-index: 0;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    opacity: 0.9;
+  }
+
+  .catalog-intro .catalog-title,
+  .catalog-intro .catalog-description,
+  .catalog-intro .catalog-search {
+    position: relative;
+    z-index: 1;
   }
 
   .product-guide-title {
+    position: relative;
+    z-index: 1;
     margin: 0;
     color: var(--ink);
     font-size: clamp(24px, 3.5vw, 32px);
@@ -738,6 +805,8 @@
   }
 
   .product-guide-description {
+    position: relative;
+    z-index: 1;
     max-width: 650px;
     margin: 12px 0 20px;
     color: var(--muted);
@@ -746,6 +815,8 @@
   }
 
   .product-guide-list {
+    position: relative;
+    z-index: 1;
     width: 100%;
     border-top: 1px solid var(--grid-line);
     border-left: 1px solid var(--grid-line);
@@ -757,7 +828,7 @@
     display: block;
     width: 100%;
     min-width: 0;
-    padding: 15px 46px 15px 16px;
+    padding: 15px 16px;
     border: 0;
     border-bottom: 1px solid var(--grid-line);
     border-radius: 0;
@@ -766,10 +837,26 @@
     font: inherit;
     text-align: left;
     cursor: pointer;
-    transition: background-color 0.14s ease;
+    isolation: isolate;
+    overflow: hidden;
+    transform: translateY(0);
+    transition:
+      transform 0.18s cubic-bezier(0.2, 0.8, 0.2, 1),
+      box-shadow 0.18s ease,
+      border-color 0.18s ease,
+      background-color 0.18s ease;
   }
 
-  .product-guide-item:hover { background: var(--grid-surface); }
+  .product-guide-item:hover,
+  .product-guide-item:focus-visible {
+    z-index: 1;
+    border-color: #D8DEE8;
+    background: #FFFFFF;
+    box-shadow:
+      0 10px 24px rgba(15, 23, 42, 0.09),
+      0 2px 6px rgba(15, 23, 42, 0.06);
+    transform: translateY(-2px);
+  }
 
   .product-guide-item:focus-visible {
     z-index: 1;
@@ -777,7 +864,54 @@
     outline-offset: -2px;
   }
 
+  .category-overview-card::before,
+  .category-overview-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    display: block;
+    padding: 1px;
+    pointer-events: none;
+    background: conic-gradient(
+      from var(--hero-beam-angle),
+      transparent 0deg,
+      transparent 286deg,
+      rgba(0, 71, 187, 0.08) 306deg,
+      rgba(0, 71, 187, 0.52) 334deg,
+      rgba(75, 171, 255, 0.78) 344deg,
+      rgba(0, 71, 187, 0.18) 354deg,
+      transparent 360deg
+    );
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    opacity: 0;
+  }
+
+  .category-overview-card::before {
+    z-index: 2;
+    padding: 2px;
+    filter: blur(5px);
+  }
+
+  .category-overview-card::after { z-index: 3; }
+
+  .category-overview-card:hover::before,
+  .category-overview-card:focus-visible::before {
+    opacity: 0.28;
+    animation: hero-border-beam 12s linear infinite;
+  }
+
+  .category-overview-card:hover::after,
+  .category-overview-card:focus-visible::after {
+    opacity: 1;
+    animation: hero-border-beam 12s linear infinite;
+  }
+
   .product-guide-question {
+    position: relative;
+    z-index: 1;
     display: block;
     margin-bottom: 6px;
     color: #0047BB;
@@ -787,6 +921,8 @@
   }
 
   .product-guide-answer {
+    position: relative;
+    z-index: 1;
     display: block;
     min-width: 0;
     color: var(--muted);
@@ -807,27 +943,6 @@
     overflow-wrap: anywhere;
     box-decoration-break: clone;
     -webkit-box-decoration-break: clone;
-  }
-
-  .product-guide-arrow {
-    position: absolute;
-    top: 50%;
-    right: 16px;
-    display: flex;
-    width: 18px;
-    height: 18px;
-    align-items: center;
-    justify-content: center;
-    color: var(--faint);
-    transform: translateY(-50%);
-    transition: color 0.14s ease, transform 0.14s ease;
-  }
-
-  .product-guide-arrow svg { display: block; width: 12px; height: 12px; }
-
-  .product-guide-item:hover .product-guide-arrow {
-    color: #0047BB;
-    transform: translate(2px, -50%);
   }
 
   .category-overview {
@@ -1546,9 +1661,23 @@
 
     .category-overview-card:hover,
     .category-overview-card:focus-visible,
+    .product-guide-item:hover,
+    .product-guide-item:focus-visible,
     .category-overview-card:hover .category-overview-icon,
     .category-overview-card:focus-visible .category-overview-icon {
       transform: none;
+    }
+
+    .grid-box::before,
+    .grid-box::after {
+      --hero-beam-angle: 40deg;
+      animation: none;
+    }
+
+    .category-overview-card::before,
+    .category-overview-card::after {
+      --hero-beam-angle: 40deg;
+      animation: none !important;
     }
   }
 
@@ -1708,21 +1837,23 @@
       </div>
     </section>
 
-    <section class="product-guide" aria-labelledby="product-guide-title">
+    <!-- Mantida no código para possível reativação futura: remova apenas o atributo hidden. -->
+    <section class="product-guide" aria-labelledby="product-guide-title" hidden>
       <h2 class="product-guide-title" id="product-guide-title">Como escolher um produto</h2>
       <p class="product-guide-description">Comece pela sua necessidade de negócio para encontrar a categoria, o produto e o nível de agregação mais adequados.</p>
       <div class="product-guide-list">
-        <button class="product-guide-item" type="button" data-guide-category="statement"><span class="product-guide-question">Precisa de dados financeiros brutos?</span><span class="product-guide-answer">Use produtos de Statement para contas, cartões, empréstimos, financiamentos e investimentos.</span><span class="product-guide-arrow" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6H9.5M6.5 3L9.5 6L6.5 9" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-        <button class="product-guide-item" type="button" data-guide-query="categorizad"><span class="product-guide-question">Precisa de transações categorizadas?</span><span class="product-guide-answer">Use produtos categorizados nos níveis 2 ou 3, conforme a granularidade necessária.</span><span class="product-guide-arrow" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6H9.5M6.5 3L9.5 6L6.5 9" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-        <button class="product-guide-item" type="button" data-guide-query="renda"><span class="product-guide-question">Precisa de sinais de renda ou capacidade financeira?</span><span class="product-guide-answer">Use <span class="product-guide-code">pf_income</span>, <span class="product-guide-code">pf_financial_entries</span>, <span class="product-guide-code">pf_recurrent_expenses</span> ou <span class="product-guide-code">pf_financial_capacity</span>.</span><span class="product-guide-arrow" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6H9.5M6.5 3L9.5 6L6.5 9" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-        <button class="product-guide-item" type="button" data-guide-query="risco de credito"><span class="product-guide-question">Precisa de um modelo de risco de crédito?</span><span class="product-guide-answer">Use produtos de score ou <span class="product-guide-code">pf_credit_risk</span>, dependendo do resultado esperado.</span><span class="product-guide-arrow" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6H9.5M6.5 3L9.5 6L6.5 9" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-        <button class="product-guide-item" type="button" data-guide-category="market"><span class="product-guide-question">Precisa entender comportamento ou posse de produtos?</span><span class="product-guide-answer">Use <span class="product-guide-code">pf_financial_products</span>, <span class="product-guide-code">pf_non_financial_products</span> ou <span class="product-guide-code">pf_principality</span>.</span><span class="product-guide-arrow" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6H9.5M6.5 3L9.5 6L6.5 9" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-        <button class="product-guide-item" type="button" data-guide-category="kyc"><span class="product-guide-question">Precisa de dados de identidade?</span><span class="product-guide-answer">Use <span class="product-guide-code">pf_identity</span> ou <span class="product-guide-code">pj_identity</span>, conforme o tipo de conta.</span><span class="product-guide-arrow" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6H9.5M6.5 3L9.5 6L6.5 9" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+        <button class="product-guide-item" type="button" data-guide-category="statement"><span class="product-guide-question">Precisa de dados financeiros brutos?</span><span class="product-guide-answer">Use produtos de Statement para contas, cartões, empréstimos, financiamentos e investimentos.</span></button>
+        <button class="product-guide-item" type="button" data-guide-query="categorizad"><span class="product-guide-question">Precisa de transações categorizadas?</span><span class="product-guide-answer">Use produtos categorizados nos níveis 2 ou 3, conforme a granularidade necessária.</span></button>
+        <button class="product-guide-item" type="button" data-guide-query="renda"><span class="product-guide-question">Precisa de sinais de renda ou capacidade financeira?</span><span class="product-guide-answer">Use <span class="product-guide-code">pf_income</span>, <span class="product-guide-code">pf_financial_entries</span>, <span class="product-guide-code">pf_recurrent_expenses</span> ou <span class="product-guide-code">pf_financial_capacity</span>.</span></button>
+        <button class="product-guide-item" type="button" data-guide-query="risco de credito"><span class="product-guide-question">Precisa de um modelo de risco de crédito?</span><span class="product-guide-answer">Use produtos de score ou <span class="product-guide-code">pf_credit_risk</span>, dependendo do resultado esperado.</span></button>
+        <button class="product-guide-item" type="button" data-guide-category="market"><span class="product-guide-question">Precisa entender comportamento ou posse de produtos?</span><span class="product-guide-answer">Use <span class="product-guide-code">pf_financial_products</span>, <span class="product-guide-code">pf_non_financial_products</span> ou <span class="product-guide-code">pf_principality</span>.</span></button>
+        <button class="product-guide-item" type="button" data-guide-category="kyc"><span class="product-guide-question">Precisa de dados de identidade?</span><span class="product-guide-answer">Use <span class="product-guide-code">pf_identity</span> ou <span class="product-guide-code">pj_identity</span>, conforme o tipo de conta.</span></button>
       </div>
     </section>
 
     <div class="catalog-intro">
-      <h2 class="catalog-title">Catálogo</h2>
+      <canvas class="catalog-intro-mesh" id="catalog-intro-mesh" aria-hidden="true"></canvas>
+      <h2 class="catalog-title">Catálogo de Produtos</h2>
       <p class="catalog-description">Este catálogo resume os produtos disponíveis, o tipo de conta, o nível de agregação e o resultado esperado.</p>
       <div class="catalog-search" role="search">
         <label class="visually-hidden" for="catalog-search-input">Buscar no catálogo</label>
@@ -2396,6 +2527,123 @@
   if (document.fonts && document.fonts.ready) {
     document.fonts.ready.then(updateProductChipLayout);
   }
+
+  /* Aether Ribbon Mesh adaptado para o fundo da introdução do catálogo. */
+  (function initCatalogIntroMesh() {
+    var section = document.querySelector(".catalog-intro");
+    var canvas = document.getElementById("catalog-intro-mesh");
+    if (!section || !canvas) return;
+
+    var context = canvas.getContext("2d", { alpha: true });
+    if (!context) return;
+
+    var width = 0;
+    var height = 0;
+    var frame = 0;
+    var visible = true;
+    var reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var pointer = { x: 0, y: 0, targetX: 0, targetY: 0 };
+
+    function resizeMesh() {
+      var bounds = section.getBoundingClientRect();
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      width = Math.max(1, Math.round(bounds.width));
+      height = Math.max(1, Math.round(bounds.height));
+      canvas.width = Math.round(width * dpr);
+      canvas.height = Math.round(height * dpr);
+      canvas.style.width = width + "px";
+      canvas.style.height = height + "px";
+      context.setTransform(dpr, 0, 0, dpr, 0, 0);
+      pointer.x = pointer.targetX = width * 0.5;
+      pointer.y = pointer.targetY = height * 0.5;
+      if (reducedMotion) drawMesh(1.4);
+    }
+
+    function noise(x, time, offset) {
+      return (Math.sin(x * 0.006 + time * 0.28 + offset) + Math.cos(x * 0.012 - time * 0.36 + offset * 2)) * 0.5;
+    }
+
+    function drawLayer(time, options) {
+      var gradient = context.createLinearGradient(0, 0, width, 0);
+      gradient.addColorStop(0, "rgba(0, 71, 187, 0.02)");
+      gradient.addColorStop(0.48, options.primary ? "rgba(0, 71, 187, 0.76)" : "rgba(75, 171, 255, 0.42)");
+      gradient.addColorStop(1, "rgba(79, 70, 229, 0.02)");
+
+      for (var ribbon = 0; ribbon < options.count; ribbon += 1) {
+        var progress = options.count === 1 ? 0 : ribbon / (options.count - 1);
+        var baseY = height * 0.14 + progress * height * 0.72 + options.offset;
+        context.beginPath();
+
+        for (var x = 0; x <= width + options.step; x += options.step) {
+          var envelope = Math.sin((x / width) * Math.PI);
+          var wave = Math.sin(x * options.frequency + time * options.speed + ribbon * 0.34) * options.amplitude * envelope;
+          var secondaryWave = Math.cos(x * 0.013 - time * 0.58 + ribbon * 0.17) * 7 * envelope;
+          var variation = noise(x, time, progress) * 4 * envelope;
+          var distanceToPointer = Math.abs(x - pointer.x);
+          var pointerFactor = Math.exp(-Math.pow(distanceToPointer / Math.max(180, width * 0.32), 2));
+          var pointerWave = Math.sin(x * 0.018 + time * 1.8) * pointerFactor * 12 * envelope;
+          var y = baseY + wave + secondaryWave + variation + pointerWave + (pointer.y - height * 0.5) * progress * 0.025;
+
+          if (x === 0) context.moveTo(x, y);
+          else context.lineTo(x, y);
+        }
+
+        context.globalAlpha = (1 - progress * 0.48) * (options.primary ? 0.36 : 0.16);
+        context.strokeStyle = gradient;
+        context.lineWidth = options.primary ? 1.05 : 0.7;
+        context.stroke();
+      }
+    }
+
+    function drawMesh(time) {
+      context.clearRect(0, 0, width, height);
+      context.globalCompositeOperation = "source-over";
+      drawLayer(time, { count: 11, step: 5, offset: 0, frequency: 0.009, amplitude: 20, speed: 0.72, primary: true });
+      drawLayer(time, { count: 7, step: 7, offset: 14, frequency: 0.016, amplitude: 11, speed: 0.46, primary: false });
+      context.globalAlpha = 1;
+    }
+
+    var previousTime = performance.now();
+    var elapsed = 0;
+    function renderMesh(now) {
+      var delta = Math.min((now - previousTime) / 1000, 0.1);
+      previousTime = now;
+      elapsed += delta;
+      var easing = 1 - Math.exp(-7 * delta);
+      pointer.x += (pointer.targetX - pointer.x) * easing;
+      pointer.y += (pointer.targetY - pointer.y) * easing;
+      drawMesh(elapsed);
+      frame = visible ? window.requestAnimationFrame(renderMesh) : 0;
+    }
+
+    section.addEventListener("pointermove", function (event) {
+      var bounds = section.getBoundingClientRect();
+      pointer.targetX = event.clientX - bounds.left;
+      pointer.targetY = event.clientY - bounds.top;
+    });
+
+    section.addEventListener("pointerleave", function () {
+      pointer.targetX = width * 0.5;
+      pointer.targetY = height * 0.5;
+    });
+
+    var meshResizeObserver = new ResizeObserver(resizeMesh);
+    meshResizeObserver.observe(section);
+
+    if ("IntersectionObserver" in window) {
+      var meshVisibilityObserver = new IntersectionObserver(function (entries) {
+        visible = entries.some(function (entry) { return entry.isIntersecting; });
+        if (visible && !reducedMotion && !frame) {
+          previousTime = performance.now();
+          frame = window.requestAnimationFrame(renderMesh);
+        }
+      }, { threshold: 0.05 });
+      meshVisibilityObserver.observe(section);
+    }
+
+    resizeMesh();
+    if (!reducedMotion) frame = window.requestAnimationFrame(renderMesh);
+  })();
 
   /* ---------- avisa o Archbee da própria altura ----------
      Este HTML roda num <iframe> de origem diferente, então o Archbee não
