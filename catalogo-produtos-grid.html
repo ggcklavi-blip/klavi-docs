@@ -623,6 +623,28 @@
     mask-image: radial-gradient(400px circle at center, white, transparent);
   }
 
+  .hero-grid-cell {
+    transform-box: fill-box;
+    transform-origin: center;
+    transition:
+      fill 0.22s ease,
+      opacity 0.22s ease,
+      filter 0.22s ease,
+      transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .hero-grid-cell.is-near {
+    fill: rgba(0, 71, 187, 0.10);
+    opacity: 0.82;
+  }
+
+  .hero-grid-cell.is-active {
+    fill: rgba(0, 71, 187, 0.23);
+    opacity: 1;
+    filter: drop-shadow(0 0 7px rgba(0, 71, 187, 0.25));
+    transform: scale(0.9);
+  }
+
   /* Variante 2: máscara linear (canto superior esquerdo pro inferior direito) */
   .grid-svg--linear {
     -webkit-mask-image: linear-gradient(to bottom right, white, transparent, transparent);
@@ -1640,6 +1662,11 @@
       --hero-beam-angle: 40deg;
       animation: none !important;
     }
+
+    .hero-grid-cell {
+      transition: none;
+      transform: none;
+    }
   }
 
 </style>
@@ -2488,6 +2515,61 @@
   if (document.fonts && document.fonts.ready) {
     document.fonts.ready.then(updateProductChipLayout);
   }
+
+  /* Hover por proximidade nos quadrados destacados da hero. */
+  (function initHeroGridHover() {
+    var hero = document.querySelector(".grid-box");
+    if (!hero) return;
+
+    var cells = Array.prototype.slice.call(hero.querySelectorAll(".grid-svg--skew > svg rect"));
+    if (!cells.length) return;
+
+    cells.forEach(function (cell) { cell.classList.add("hero-grid-cell"); });
+
+    var pointerX = 0;
+    var pointerY = 0;
+    var hoverFrame = 0;
+
+    function clearGridHover() {
+      cells.forEach(function (cell) {
+        cell.classList.remove("is-active", "is-near");
+      });
+    }
+
+    function updateGridHover() {
+      hoverFrame = 0;
+      var nearestCell = null;
+      var nearestDistance = Infinity;
+      var distances = cells.map(function (cell) {
+        var bounds = cell.getBoundingClientRect();
+        var deltaX = pointerX - (bounds.left + bounds.width * 0.5);
+        var deltaY = pointerY - (bounds.top + bounds.height * 0.5);
+        var distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+        if (distance < nearestDistance) {
+          nearestDistance = distance;
+          nearestCell = cell;
+        }
+        return { cell: cell, distance: distance };
+      });
+
+      distances.forEach(function (item) {
+        item.cell.classList.toggle("is-near", item.distance < 155 && item.cell !== nearestCell);
+        item.cell.classList.toggle("is-active", item.cell === nearestCell && nearestDistance < 115);
+      });
+    }
+
+    hero.addEventListener("pointermove", function (event) {
+      pointerX = event.clientX;
+      pointerY = event.clientY;
+      if (!hoverFrame) hoverFrame = window.requestAnimationFrame(updateGridHover);
+    });
+
+    hero.addEventListener("pointerleave", function () {
+      if (hoverFrame) window.cancelAnimationFrame(hoverFrame);
+      hoverFrame = 0;
+      clearGridHover();
+    });
+  })();
 
   /* Aether Ribbon Mesh adaptado para o fundo da introdução do catálogo. */
   (function initCatalogIntroMesh() {
