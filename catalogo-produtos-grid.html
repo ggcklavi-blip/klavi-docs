@@ -1752,6 +1752,61 @@
   var CHEVRON_RIGHT = '<svg class="anticon anticon-right" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 18" fill="none"><path d="M10.8679 8.29237L0.302345 0.0400266C0.274737 0.0182911 0.241557 0.0047835 0.206618 0.00105482C0.171679 -0.00267386 0.136397 0.00352766 0.104823 0.0189473C0.0732498 0.0343669 0.0466661 0.0583793 0.0281245 0.0882266C0.00958281 0.118074 -0.00016456 0.152546 2.10193e-06 0.187683V1.9994C2.10193e-06 2.11425 0.0539084 2.2244 0.142971 2.29471L8.58045 8.883L0.142971 15.4713C0.0515646 15.5416 2.10193e-06 15.6517 2.10193e-06 15.7666V17.5783C2.10193e-06 17.7353 0.18047 17.8221 0.302345 17.726L10.8679 9.47362C10.9577 9.40357 11.0304 9.31397 11.0804 9.21162C11.1303 9.10928 11.1563 8.99689 11.1563 8.883C11.1563 8.7691 11.1303 8.65671 11.0804 8.55437C11.0304 8.45202 10.9577 8.36242 10.8679 8.29237Z" fill="currentColor"/></svg>';
   var EXTERNAL_LINK = '<svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M10.5 6.5V9.5C10.5 9.76522 10.3946 10.0196 10.2071 10.2071C10.0196 10.3946 9.76522 10.5 9.5 10.5H2.5C2.23478 10.5 1.98043 10.3946 1.79289 10.2071C1.60536 10.0196 1.5 9.76522 1.5 9.5V2.5C1.5 2.23478 1.60536 1.98043 1.79289 1.79289C1.98043 1.60536 2.23478 1.5 2.5 1.5H5.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="M10.5 1.5L6 6" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
+  var PRODUCT_LINKS = {
+    pf_balance: "https://docs.klavi.ai/connect/2fsP-v1#8dqke",
+    pf_bank_fixed_incomes: "https://docs.klavi.ai/connect/bankfixedincomes",
+    pf_bets_indicator: "https://docs.klavi.ai/connect/ZQ1d-v1",
+    pf_categorized_checking_l2: "https://docs.klavi.ai/connect/FaED-v1#5wR_r",
+    pf_categorized_checking_l3: "https://docs.klavi.ai/connect/zJgr-v1#MTKqY",
+    pf_categorized_creditcard_l2: "https://docs.klavi.ai/connect/xTom-v1#1oauT",
+    pf_categorized_creditcard_l3: "https://docs.klavi.ai/connect/jPT5-v1#s_1yu",
+    pf_categorized_savings_l2: "https://docs.klavi.ai/connect/categorizedsavingsl2",
+    pf_categorized_savings_l3: "https://docs.klavi.ai/connect/categorizedsavingsl3",
+    pf_checking_account: "https://docs.klavi.ai/connect/Pe09-v1#Xh6zQ",
+    pf_credit_card: "https://docs.klavi.ai/connect/7NSH-v1#YUIGp",
+    pf_credit_fixed_incomes: "https://docs.klavi.ai/connect/creditfixedincomes",
+    pf_credit_risk: "https://docs.klavi.ai/connect/HSmI-v1#rC3jh",
+    pf_financial_capacity: "https://docs.klavi.ai/connect/3TFB-v1",
+    pf_financial_entries: "https://docs.klavi.ai/connect/S3PE-v1#tGner",
+    pf_financial_products: "https://docs.klavi.ai/connect/EJ3Z-v1#ABva4",
+    pf_financing: "https://docs.klavi.ai/connect/financing",
+    pf_funds: "https://docs.klavi.ai/connect/funds",
+    pf_identity: "https://docs.klavi.ai/connect/Itil-v1#pfidentity",
+    pf_income: "https://docs.klavi.ai/connect/QIWo-v1",
+    pf_invoice_financing: "https://docs.klavi.ai/connect/invoicefinancing",
+    pf_loans: "https://docs.klavi.ai/connect/Zpma-v1",
+    pf_non_financial_products: "https://docs.klavi.ai/connect/KS52-v1#LBECA",
+    pf_principality: "https://docs.klavi.ai/connect/itph-v1#BN8sz",
+    pf_recurrent_expenses: "https://docs.klavi.ai/connect/KnDQ-recurrent-expenses",
+    pf_savings_account: "https://docs.klavi.ai/connect/rOOS-savingsaccount",
+    pf_score_l1: "https://docs.klavi.ai/connect/4Sao-v1#pfscorel1",
+    pf_score_l2: "https://docs.klavi.ai/connect/g1SU-v1#pfscorel2",
+    pf_score_l3: "https://docs.klavi.ai/connect/z4tR-v1",
+    pf_treasure_titles: "https://docs.klavi.ai/connect/treasuretitles",
+    pf_unarranged_account_overdraft: "https://docs.klavi.ai/connect/unarrangedaccountoverdraft",
+    pf_variable_incomes: "https://docs.klavi.ai/connect/Blgd-v1",
+    pj_balance: "https://docs.klavi.ai/connect/2fsP-v1#W2TtK",
+    pj_bank_fixed_incomes: "https://docs.klavi.ai/connect/bankfixedincomes",
+    pj_categorized_checking_l2: "https://docs.klavi.ai/connect/FaED-v1#CkM3F",
+    pj_categorized_checking_l3: "https://docs.klavi.ai/connect/zJgr-v1#jNfbT",
+    pj_categorized_creditcard_l2: "https://docs.klavi.ai/connect/xTom-v1#Wf9gq",
+    pj_categorized_creditcard_l3: "https://docs.klavi.ai/connect/jPT5-v1#vHRiJ",
+    pj_categorized_savings_l2: "https://docs.klavi.ai/connect/categorizedsavingsl2",
+    pj_categorized_savings_l3: "https://docs.klavi.ai/connect/categorizedsavingsl3",
+    pj_checking_account: "https://docs.klavi.ai/connect/Pe09-v1#0Merd",
+    pj_credit_card: "https://docs.klavi.ai/connect/7NSH-v1#YUIGp",
+    pj_credit_fixed_incomes: "https://docs.klavi.ai/connect/creditfixedincomes",
+    pj_financing: "https://docs.klavi.ai/connect/financing",
+    pj_funds: "https://docs.klavi.ai/connect/funds",
+    pj_identity: "https://docs.klavi.ai/connect/Itil-v1#pjidentity",
+    pj_invoice_financing: "https://docs.klavi.ai/connect/invoicefinancing",
+    pj_loans: "https://docs.klavi.ai/connect/Zpma-v1",
+    pj_savings_account: "https://docs.klavi.ai/connect/rOOS-savingsaccount",
+    pj_treasure_titles: "https://docs.klavi.ai/connect/treasuretitles",
+    pj_unarraged_account_overdraft: "https://docs.klavi.ai/connect/unarrangedaccountoverdraft",
+    pj_variable_incomes: "https://docs.klavi.ai/connect/variableincomes"
+  };
+
   var ICONS = {
     statement: '<svg class="anticon anticon-file-text" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"><path d="M16.125 7.3125V6.1875C16.125 6.08437 16.0406 6 15.9375 6H6.9375C6.83437 6 6.75 6.08437 6.75 6.1875V7.3125C6.75 7.41563 6.83437 7.5 6.9375 7.5H15.9375C16.0406 7.5 16.125 7.41563 16.125 7.3125ZM6.9375 9.375C6.83437 9.375 6.75 9.45937 6.75 9.5625V10.6875C6.75 10.7906 6.83437 10.875 6.9375 10.875H11.25C11.3531 10.875 11.4375 10.7906 11.4375 10.6875V9.5625C11.4375 9.45937 11.3531 9.375 11.25 9.375H6.9375ZM10.3125 19.9688H4.875V3.46875H18V11.5312C18 11.6344 18.0844 11.7188 18.1875 11.7188H19.5C19.6031 11.7188 19.6875 11.6344 19.6875 11.5312V2.53125C19.6875 2.11641 19.3523 1.78125 18.9375 1.78125H3.9375C3.52266 1.78125 3.1875 2.11641 3.1875 2.53125V20.9062C3.1875 21.3211 3.52266 21.6562 3.9375 21.6562H10.3125C10.4156 21.6562 10.5 21.5719 10.5 21.4688V20.1562C10.5 20.0531 10.4156 19.9688 10.3125 19.9688ZM20.7586 21.1758L18.5719 18.9891C19.0945 18.2977 19.4062 17.4352 19.4062 16.5C19.4062 14.2219 17.5594 12.375 15.2812 12.375C13.0031 12.375 11.1562 14.2219 11.1562 16.5C11.1562 18.7781 13.0031 20.625 15.2812 20.625C16.1203 20.625 16.8984 20.3742 17.55 19.9453L19.7695 22.1648C19.807 22.2023 19.8539 22.2188 19.9008 22.2188C19.9477 22.2188 19.9969 22.2 20.032 22.1648L20.7586 21.4383C20.7759 21.4211 20.7896 21.4006 20.799 21.3781C20.8083 21.3556 20.8132 21.3314 20.8132 21.307C20.8132 21.2826 20.8083 21.2585 20.799 21.236C20.7896 21.2134 20.7759 21.193 20.7586 21.1758ZM15.2812 19.125C13.8305 19.125 12.6562 17.9508 12.6562 16.5C12.6562 15.0492 13.8305 13.875 15.2812 13.875C16.732 13.875 17.9062 15.0492 17.9062 16.5C17.9062 17.9508 16.732 19.125 15.2812 19.125Z" fill="currentColor"/></svg>',
     risk: '<svg class="anticon anticon-safety" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 22" fill="none"><path d="M16.9898 2.76328 9.02578.0492187C8.92969.0164062 8.80078 0 8.67188 0c-.12891 0-.25782.0164062-.35391.0492187L.353906 2.76328C.159375 2.82891 0 3.05391 0 3.26016V14.5664c0 .2063.133594.4781.295313.607L8.37422 21.4687c.08203.0633.1875.0961.29531.0961.10781 0 .21563-.0328.29531-.0961l8.07896-6.2953c.1617-.1265.2953-.3984.2953-.607V3.26016c.0047-.20625-.1547-.42891-.3492-.49688ZM15.6562 14.1164 8.67188 19.5586 1.6875 14.1164V4.09453l6.98438-2.38125 6.98434 2.38125v10.02187ZM6.14531 9.40547c-.07031-.0961-.18281-.15469-.30468-.15469H4.54688c-.15235 0-.24141.17344-.15235.29766l2.9625 4.07816c.03503.0479.08088.0869.13382.1138.05295.0269.11149.0409.17087.0409.05938 0 .11792-.014.17086-.0409.05295-.0269.0988-.0659.13383-.1138l4.98276-6.86019c.0891-.12422 0-.29766-.1523-.29766h-1.2938c-.1195 0-.2344.05859-.3047.15469l-3.53668 4.87026-1.51641-2.08829Z" fill="currentColor"/></svg>',
@@ -1796,7 +1851,7 @@
             { title: "Empréstimos", level: "Institution-level", description: "Dados de contrato de empréstimo: valor, juros, parcelas e histórico de pagamento.", products: [{ type: "PF", name: "pf_loans" }, { type: "PJ", name: "pj_loans" }] },
             { title: "Financiamentos", level: "Institution-level", description: "Dados de contrato de financiamento: valor financiado, juros, parcelas e histórico.", products: [{ type: "PF", name: "pf_financing" }, { type: "PJ", name: "pj_financing" }] },
             { title: "Antecipação de recebíveis", level: "Institution-level", description: "Dados de contrato de antecipação de recebíveis: valor, juros, parcelas e histórico.", products: [{ type: "PF", name: "pf_invoice_financing" }, { type: "PJ", name: "pj_invoice_financing" }] },
-            { title: "Cheque especial", level: "Institution-level", description: "Dados de cheque especial: detalhes do contrato, valor, juros, parcelas e histórico.", products: [{ type: "PF", name: "pf_overdraft" }, { type: "PJ", name: "pj_overdraft" }] }
+            { title: "Cheque especial", level: "Institution-level", description: "Dados de cheque especial: detalhes do contrato, valor, juros, parcelas e histórico.", products: [{ type: "PF", name: "pf_unarranged_account_overdraft" }, { type: "PJ", name: "pj_unarraged_account_overdraft" }] }
           ]
         },
         {
@@ -1806,7 +1861,7 @@
             { title: "Renda fixa bancária", level: "Institution-level", description: "Investimentos de renda fixa bancária: dados do produto, saldo e transações.", products: [{ type: "PF", name: "pf_bank_fixed_incomes" }, { type: "PJ", name: "pj_bank_fixed_incomes" }] },
             { title: "Fundos", level: "Institution-level", description: "Fundos de investimento: dados do produto, saldo e transações.", products: [{ type: "PF", name: "pf_funds" }, { type: "PJ", name: "pj_funds" }] },
             { title: "Renda fixa de crédito", level: "Institution-level", description: "Investimentos de renda fixa de crédito: dados do produto, saldo e transações.", products: [{ type: "PF", name: "pf_credit_fixed_incomes" }, { type: "PJ", name: "pj_credit_fixed_incomes" }] },
-            { title: "Títulos públicos", level: "Institution-level", description: "Títulos públicos: dados do produto, saldo e transações.", products: [{ type: "PF", name: "pf_treasury_bonds" }, { type: "PJ", name: "pj_treasury_bonds" }] }
+            { title: "Títulos públicos", level: "Institution-level", description: "Títulos públicos: dados do produto, saldo e transações.", products: [{ type: "PF", name: "pf_treasure_titles" }, { type: "PJ", name: "pj_treasure_titles" }] }
           ]
         },
         {
@@ -1935,7 +1990,9 @@
 
     var wrapper = el("div", "product-link-wrapper");
     var link = el("a", "product-name");
-    link.href = "#";
+    link.href = PRODUCT_LINKS[product.name];
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
     link.appendChild(document.createTextNode(product.name));
 
     var icon = el("span", "external-link-icon");
