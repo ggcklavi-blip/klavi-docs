@@ -1705,7 +1705,6 @@
 
   /* ---------- raio consistente nos contornos completos ---------- */
   .catalog-frame,
-  .grid-box,
   .product-catalog,
   .category-card-grid,
   .product-guide-list,
@@ -1717,9 +1716,32 @@
     border-radius: 8px;
   }
 
-  .category-card-grid,
+  .grid-box {
+    border-radius: 0;
+  }
+
   .product-guide-list {
     overflow: hidden;
+  }
+
+  .category-card-grid {
+    overflow: visible;
+  }
+
+  .category-overview-card:nth-child(1) {
+    border-radius: 8px 0 0 0;
+  }
+
+  .category-overview-card:nth-child(2) {
+    border-radius: 0 8px 0 0;
+  }
+
+  .category-overview-card:nth-child(3) {
+    border-radius: 0 0 0 8px;
+  }
+
+  .category-overview-card:nth-child(4) {
+    border-radius: 0 0 8px 0;
   }
 
   .intermediate-group-title {
@@ -1728,6 +1750,21 @@
 
   .intermediate-group--titled .product-accordion-group {
     border-radius: 0 0 8px 8px;
+  }
+
+  @media (max-width: 520px) {
+    .category-overview-card:nth-child(1) {
+      border-radius: 8px 8px 0 0;
+    }
+
+    .category-overview-card:nth-child(2),
+    .category-overview-card:nth-child(3) {
+      border-radius: 0;
+    }
+
+    .category-overview-card:nth-child(4) {
+      border-radius: 0 0 8px 8px;
+    }
   }
 
 </style>
@@ -2747,8 +2784,8 @@
 
       for (var ribbon = 0; ribbon < options.count; ribbon += 1) {
         var progress = options.count === 1 ? 0 : ribbon / (options.count - 1);
-        var baseY = height * 0.26 + progress * height * 0.72 + options.offset;
-        var horizontalOffset = width * 0.18;
+        var baseY = height * 0.32 + progress * height * 0.62 + options.offset;
+        var horizontalOffset = 0;
         context.beginPath();
 
         for (var x = 0; x <= width + options.step; x += options.step) {
